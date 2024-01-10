@@ -1,0 +1,13 @@
+date,host,precision,variant,num_cols,num_runs,num_threads,stencils
+20230726,daint,double,nl-gt:cpu_kfirst,65536,50,1,354.8748922534287
+20230726,daint,single,nl-gt:cpu_kfirst,65536,50,1,277.6893484592438
+20230726,daint,single,tl-gt:cpu_kfirst,65536,50,1,4340.497136693448
+20230726,daint,double,tl-gt:cpu_kfirst,65536,50,1,5658.169772811234
+20230727,daint,single,ad-gt:cpu_kfirst,65536,50,1,1439.6096684783697
+20230727,daint,double,ad-gt:cpu_kfirst,65536,50,1,1713.49234867841
+20230727,daint,double,ad-dace:gpu,65536,50,1,90.68712685257196
+20230727,daint,single,ad-dace:gpu,65536,50,1,53.95997980609536
+20230727,daint,double,tl-dace:gpu,65536,50,1,218.8832743652165
+20230727,daint,single,tl-dace:gpu,65536,50,1,127.49483820050955
+20230727,daint,single,nl-dace:gpu,65536,50,1,7.452749889343977
+20230727,daint,double,nl-dace:gpu,65536,50,1,11.575847696512938

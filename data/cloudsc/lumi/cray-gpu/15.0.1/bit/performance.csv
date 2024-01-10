@@ -1,0 +1,2 @@
+date,host,precision,variant,num_cols,num_threads,nproma,num_runs,runtime_mean,runtime_stddev,mflops_mean,mflops_stddev
+20240103,lumi,double,hip-k-caching,65536,1,64,50,30.3,1.0926470386270255,266046.92,10564.374408668533
