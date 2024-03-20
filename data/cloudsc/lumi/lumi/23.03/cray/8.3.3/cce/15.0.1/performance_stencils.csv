@@ -1,3 +1,5 @@
 date,host,precision,variant,num_cols,num_runs,num_threads,stencils
 20231222,nid005307,single,dace:gpu,65536,50,1,17.536290157586336
 20231222,nid005307,double,dace:gpu,65536,50,1,39.71238363534212
+20240320,nid005355,single,gt:cpu_kfirst,65536,50,7,935.4078910825774
+20240320,nid005355,double,gt:cpu_kfirst,65536,50,7,969.7968387277797

@@ -1,7 +1,6 @@
 date,host,precision,variant,num_cols,num_runs,num_threads,stencils
 20240103,nid005113,double,nl-gt:cpu_kfirst,65536,50,56,78.76949770376086
 20240103,nid005113,double,nl-gt:cpu_kfirst,65536,50,7,287.4859781935811
-20240103,nid005113,double,nl-gt:cpu_kfirst,65536,50,7,287.48826641589403
 20240103,nid005113,single,nl-gt:cpu_kfirst,65536,50,7,238.75894963741302
 20240103,nid005113,single,nl-gt:cpu_kfirst,65536,50,56,36.96849534288049
 20240103,nid005113,single,ad-gt:cpu_kfirst,65536,50,56,233.8868941925466
