@@ -6,22 +6,19 @@ import numpy as np
 import os
 from typing import Any, Literal
 
-from common import Bar, project_root_dir
+from common import Bar, NUM_COLS, ROOT_DIR
 
 
 # config: start
 FIGSIZE_IN_INCH: tuple[int, int] = (40, 20)
-NUM_COLS: int = 65536
-ROOT_DIR: str = os.path.join(project_root_dir, "data")
 # config: end
 
 
 def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Bar], list[Bar]]:
-    # import ipdb
-    # ipdb.set_trace()
     data_0 = [
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc/daint/intel/6.0.10/release/performance.csv"),
+            col_name="runtime_mean",
             constraints={"variant": "fortran", "num_cols": NUM_COLS, "precision": precision},
             x=1,
             color="grey",
@@ -29,6 +26,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc/daint/nvidia/6.0.10/release/performance.csv"),
+            col_name="runtime_mean",
             constraints={
                 "variant": "gpu-scc-k-caching",
                 "num_cols": NUM_COLS,
@@ -40,6 +38,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc/daint/nvidia/6.0.10/release/performance.csv"),
+            col_name="runtime_mean",
             constraints={
                 "variant": "loki-scc-cuf-hoist",
                 "num_cols": NUM_COLS,
@@ -51,6 +50,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc/daint/nvidia/6.0.10/release/performance.csv"),
+            col_name="runtime_mean",
             constraints={"variant": "cuda-k-caching", "num_cols": NUM_COLS, "precision": precision},
             x=5,
             color="green",
@@ -58,6 +58,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc/daint/gnu/6.0.10/performance.csv"),
+            col_name="runtime_mean",
             constraints={"variant": "gt:cpu_kfirst", "num_cols": NUM_COLS, "precision": precision},
             x=2,
             color="cornflowerblue",
@@ -65,6 +66,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc/daint/gnu/6.0.10/performance.csv"),
+            col_name="runtime_mean",
             constraints={"variant": "dace:gpu", "num_cols": NUM_COLS, "precision": precision},
             x=6,
             color="coral",
@@ -74,12 +76,14 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
     data_1 = [
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc2/daint/intel/6.0.10/release/performance.csv"),
+            col_name="runtime_mean",
             constraints={"variant": "nl", "num_cols": NUM_COLS, "precision": precision},
             x=1,
             color="grey",
         ),
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc2/daint/nvidia/6.0.10/release/performance.csv"),
+            col_name="runtime_mean",
             constraints={
                 "variant": "nl-loki-scc-hoist",
                 "num_cols": NUM_COLS,
@@ -90,6 +94,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc2/daint/gnu/6.0.10/performance.csv"),
+            col_name="runtime_mean",
             constraints={
                 "variant": "nl-gt:cpu_kfirst",
                 "num_cols": NUM_COLS,
@@ -100,6 +105,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc2/daint/gnu/6.0.10/performance.csv"),
+            col_name="runtime_mean",
             constraints={"variant": "nl-dace:gpu", "num_cols": NUM_COLS, "precision": precision},
             x=6,
             color="coral",
@@ -108,12 +114,14 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
     data_2 = [
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc2/daint/intel/6.0.10/release/performance.csv"),
+            col_name="runtime_mean",
             constraints={"variant": "ad", "num_cols": NUM_COLS, "precision": precision},
             x=1,
             color="grey",
         ),
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc2/daint/gnu/6.0.10/performance.csv"),
+            col_name="runtime_mean",
             constraints={
                 "variant": "ad-gt:cpu_kfirst",
                 "num_cols": NUM_COLS,
@@ -124,6 +132,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(ROOT_DIR, "cloudsc2/daint/gnu/6.0.10/performance.csv"),
+            col_name="runtime_mean",
             constraints={"variant": "ad-dace:gpu", "num_cols": NUM_COLS, "precision": precision},
             x=6,
             color="coral",

@@ -7,10 +7,12 @@ from typing import Optional, Union
 from typing_extensions import Annotated
 
 
-project_root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+NUM_COLS: int = 65536
+PROJECT_ROOT_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+ROOT_DIR: str = os.path.join(PROJECT_ROOT_DIR, "data")
 
 
-def get_time(ds_name: str, **constraints) -> float:
+def get_time(ds_name: str, col_name: str, **constraints) -> float:
     if os.path.exists(ds_name):
         ds = pd.read_csv(ds_name)
         for key, value in constraints.items():
@@ -20,21 +22,23 @@ def get_time(ds_name: str, **constraints) -> float:
         elif len(ds) > 1:
             raise RuntimeError(f"Multiple rows matching the constraints {constraints}.")
         else:
-            return ds["runtime_mean"].item()
+            return ds[col_name].item()
     else:
         return 0
 
 
 class Bar(BaseModel):
     ds_name: str
+    col_name: str
     constraints: dict[str, Union[int, str]]
     color: str
-    x: int
+    x: float
     label: Optional[str] = None
-    y: Annotated[int, Field(validate_default=True)] = -1
+    y: Annotated[float, Field(validate_default=True)] = -1
+    bottom: Optional[Bar] = None
     width: float = 0.5
 
     @field_validator("y", mode="after")
     @classmethod
     def set_y(cls, v, info):
-        return get_time(info.data["ds_name"], **info.data["constraints"])
+        return get_time(info.data["ds_name"], info.data["col_name"], **info.data["constraints"])
