@@ -3,3 +3,6 @@
 .DS_Store
 venv/
 __pycache__/
+*.aux
+*.bbl
+*.pdf
