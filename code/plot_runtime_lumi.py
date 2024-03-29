@@ -153,17 +153,17 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
             x=1,
             color="grey",
         ),
-        Bar(
-            ds_name=os.path.join(ROOT_DIR, "cloudsc2/lumi/cray-gpu/14.0.2/bit/performance.csv"),
-            col_name="runtime_mean",
-            constraints={
-                "variant": "ad-loki-scc-hoist",
-                "num_cols": NUM_COLS,
-                "precision": precision,
-            },
-            x=4,
-            color="khaki",
-        ),
+        # Bar(
+        #     ds_name=os.path.join(ROOT_DIR, "cloudsc2/lumi/cray-gpu/14.0.2/bit/performance.csv"),
+        #     col_name="runtime_mean",
+        #     constraints={
+        #         "variant": "ad-loki-scc-hoist",
+        #         "num_cols": NUM_COLS,
+        #         "precision": precision,
+        #     },
+        #     x=4,
+        #     color="khaki",
+        # ),
         Bar(
             ds_name=os.path.join(
                 ROOT_DIR, "cloudsc2/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/performance.csv"

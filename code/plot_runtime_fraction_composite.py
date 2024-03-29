@@ -211,6 +211,7 @@ def fill_ax_x0(ax: plt.Axes, data: list[Bar], data_stencils: list[Bar]) -> list[
     for bar, bar_stencil in zip(data, data_stencils):
         y1 = bar_stencil.y / bar.y
         y2 = 1 - y1
+        # print(f"{100*y1=:.4f} {100*y2=:.4f}")
         h1 = ax.bar(bar.x, y1, width=bar.width, color=bar.color, edgecolor="black")
         ax.bar(bar.x, y2, bottom=y1, width=bar.width, color=bar.color, hatch="//")
         ax.bar(bar.x, y2, bottom=y1, width=bar.width, color="none", edgecolor="black")
@@ -221,7 +222,7 @@ def fill_ax_x0(ax: plt.Axes, data: list[Bar], data_stencils: list[Bar]) -> list[
 
     ax.set_xlim([0.25, 5.25])
     ax.xaxis.set_ticks([1.25, 2.75, 4.25])
-    ax.xaxis.set_ticklabels(["Daint", "MLux", "LUMI"])
+    ax.xaxis.set_ticklabels(["Piz Daint", "MeluXina", "LUMI"])
     ax.xaxis.set_tick_params(length=0)
 
     ax.set_ylim([0, 1.1])
@@ -246,13 +247,14 @@ def fill_ax_x1(ax: plt.Axes, data: list[Bar], data_stencils: list[Bar]) -> None:
     for bar, bar_stencil in zip(data, data_stencils):
         y1 = bar_stencil.y / bar.y
         y2 = 1 - y1
+        # print(f"{100*y1=:.4f} {100*y2=:.4f}")
         ax.bar(bar.x, y1, width=bar.width, color=bar.color, edgecolor="black")
         ax.bar(bar.x, y2, bottom=y1, width=bar.width, color=bar.color, hatch="//")
         ax.bar(bar.x, y2, bottom=y1, width=bar.width, color="none", edgecolor="black")
 
     ax.set_xlim([0.25, 5.25])
     ax.xaxis.set_ticks([1.25, 2.75, 4.25])
-    ax.xaxis.set_ticklabels(["Daint", "MLux", "LUMI"])
+    ax.xaxis.set_ticklabels(["Piz Daint", "MeluXina", "LUMI"])
     ax.xaxis.set_tick_params(length=0)
 
     ax.set_ylim([0, 1.1])
@@ -279,13 +281,14 @@ def fill_ax_x2(ax: plt.Axes, data: list[Bar], data_stencils: list[Bar]) -> None:
     for bar, bar_stencil in zip(data, data_stencils):
         y1 = bar_stencil.y / bar.y
         y2 = 1 - y1
+        # print(f"{100*y1=:.4f} {100*y2=:.4f}")
         ax.bar(bar.x, y1, width=bar.width, color=bar.color, edgecolor="black")
         ax.bar(bar.x, y2, bottom=y1, width=bar.width, color=bar.color, hatch="//")
         ax.bar(bar.x, y2, bottom=y1, width=bar.width, color="none", edgecolor="black")
 
     ax.set_xlim([0.25, 5.25])
     ax.xaxis.set_ticks([1.25, 2.75, 4.25])
-    ax.xaxis.set_ticklabels(["Daint", "MLux", "LUMI"])
+    ax.xaxis.set_ticklabels(["Piz Daint", "MeluXina", "LUMI"])
     ax.xaxis.set_tick_params(length=0)
 
     ax.set_ylim([0, 1.1])
@@ -345,7 +348,7 @@ def main() -> None:
         data_00[0].label,
         data_00[1].label,
         "Stencil computations (generated code)",
-        "Framework (Python)",
+        "Python overhead (infrastructure and framework code)",
     ]
     ax_leg.legend(
         handles,
