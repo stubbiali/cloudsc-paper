@@ -1,7 +1,10 @@
-.idea/
-.python-version
-.DS_Store
-venv/
-__pycache__/
 *.aux
 *.bbl
+*.bkp
+*tmp*
+.DS_Store
+.idea/
+.python-version
+__pycache__/
+_minted*
+venv/
