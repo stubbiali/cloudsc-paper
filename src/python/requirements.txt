@@ -1,4 +1,5 @@
 black
+click
 matplotlib
 numpy
 pandas

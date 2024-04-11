@@ -8,11 +8,12 @@ from typing_extensions import Annotated
 
 
 NUM_COLS: int = 65536
-PROJECT_ROOT_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-ROOT_DIR: str = os.path.join(PROJECT_ROOT_DIR, "data")
+PROJECT_ROOT_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+DATA_DIR: str = os.path.join(PROJECT_ROOT_DIR, "data")
+IMG_DIR: str = os.path.join(PROJECT_ROOT_DIR, "img")
 
 
-def get_time(ds_name: str, col_name: str, **constraints) -> float:
+def get_value_from_dataset(ds_name: str, col_name: str, **constraints) -> float:
     if os.path.exists(ds_name):
         ds = pd.read_csv(ds_name)
         for key, value in constraints.items():
@@ -41,4 +42,4 @@ class Bar(BaseModel):
     @field_validator("y", mode="after")
     @classmethod
     def set_y(cls, v, info):
-        return get_time(info.data["ds_name"], info.data["col_name"], **info.data["constraints"])
+        return get_value_from_dataset(info.data["ds_name"], info.data["col_name"], **info.data["constraints"])
