@@ -89,7 +89,7 @@
 
         \begin{figure}[t!]
             \centering
-            \includegraphics[scale=0.44]{img/performance_daint_2.pdf}
+            \includegraphics[scale=0.44]{performance_daint_2.pdf}
             \caption{Execution time on a single NUMA domain of a hybrid node of the Piz Daint supercomputer for CLOUDSC (left column), CLOUDSC2NL (center column) and the symmetry test for CLOUDSC2TL and CLOUDSC2AD (right column) using either double precision (top row) or single precision (bottom row) floating point arithmetic. Displayed are the multi-threaded Fortran baseline using OpenMP (grey); two GPU-accelerated Fortran implementations, either using OpenACC directives (lime) or the source-to-source translation tool Loki (yellow); an optimized CUDA C version (green); and the GT4Py rewrite, either using the GridTools C++ CPU backend with k-first data ordering (blue) or the DaCe GPU backend (orange). All numbers should be intended as an average over $50$ realizations. The panels only show the code versions available and validating at the time of writing.}
             \label{fig:performance-daint}
         \end{figure}
@@ -106,7 +106,7 @@
 
         \begin{figure}[t!]
             \centering
-            \includegraphics[scale=0.44]{img/performance_mlux_2.pdf}
+            \includegraphics[scale=0.44]{performance_mlux_2.pdf}
             \caption{As Fig.\,\ref{fig:performance-daint} but for the MeluXina supercomputer.}
             \label{fig:performance-mlux}
         \end{figure}
@@ -119,7 +119,7 @@
 
         \begin{figure}[t!]
             \centering
-            \includegraphics[scale=0.44]{img/performance_lumi_2.pdf}
+            \includegraphics[scale=0.44]{performance_lumi_2.pdf}
             \caption{As Fig.\,\ref{fig:performance-daint} but for the LUMI supercomputer.}
             \label{fig:performance-lumi}
         \end{figure}
@@ -128,7 +128,7 @@
 
         \begin{figure}[t!]
             \centering
-            \includegraphics[scale=0.44]{img/runtime_fraction_1.pdf}
+            \includegraphics[scale=0.44]{runtime_fraction_1.pdf}
             \caption{For the GT4Py rewrites of CLOUDSC (left column), CLOUDSC2NL (center column) and the symmetry test for CLOUDSC2TL and CLOUDSC2AD (right column), fraction of the total execution time spent within the stencil computations (full bars) and the Python side of the application (hatched bars) on Piz Daint, MeluXina and LUMI. Results are shown for the GridTools C++ CPU backend with k-first data ordering (blue) and the DaCe GPU backend (orange), either using double precision (top row) or single precision (bottom row) floating point arithmetic.}
             \label{fig:runtime-fraction}
         \end{figure}

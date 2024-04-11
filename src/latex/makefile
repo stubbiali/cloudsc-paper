@@ -16,6 +16,12 @@ SUBFILES_SRC = \
 BIB_SRC = subfiles/references.bib
 INC =
 MEDIA_ROOT = img
+PYTHON_SRC_DIR = src/python
+PYTHON_SCRIPTS = \
+	$(PYTHON_SRC_DIR)/plot_runtime_daint.py \
+	$(PYTHON_SRC_DIR)/plot_runtime_fraction_composite.py \
+	$(PYTHON_SRC_DIR)/plot_runtime_lumi.py \
+	$(PYTHON_SRC_DIR)/plot_runtime_mlux.py
 FIGS =
 # end of configurable section
 
@@ -48,7 +54,7 @@ $(BIB_TRG): $(BIB_SRC) $(MAIN_SRC)
 	$(LATEX) $(LATEX_OPTIONS) $(MAIN_SRC)
 	bibtex $(MAIN_BASE)
 
-.PHONY: clean clean_main distclean
+.PHONY: clean clean_main distclean img
 
 clean:
 	$(RM) $(CLEANFILES)
@@ -60,3 +66,9 @@ distclean: clean
 	$(RM) $(SUBFILES_TRG)
 	$(RM) $(BIB_TRG)
 	$(RM) $(MAIN_TRG)
+	$(RM) -r _minted-main
+
+img:
+	for script in $(PYTHON_SCRIPTS) ; do \
+        python $$script --no-show --save ; \
+    done
