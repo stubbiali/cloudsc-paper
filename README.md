@@ -31,6 +31,6 @@ $ source venv/bin/activate
 (venv) $ deactivate
 ```
 
-The data to generate the figures are retrieved from `data/`.
+The performance numbers shown in the figures are retrieved from `data/`.
 
 Older versions of the article can be found in `pdf/`.
