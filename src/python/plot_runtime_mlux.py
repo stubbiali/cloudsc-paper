@@ -59,7 +59,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
             ds_name=os.path.join(DATA_DIR, "cloudsc/mlux/nvhpc/22.7/release/performance.csv"),
             col_name="runtime_mean",
             constraints={
-                "variant": "c-cuda-k-caching",
+                "variant": "cuda-k-caching",
                 "num_cols": NUM_COLS,
                 "precision": precision,
             },
@@ -154,17 +154,17 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
             x=1,
             color="grey",
         ),
-        Bar(
-            ds_name=os.path.join(DATA_DIR, "cloudsc2/mlux/nvhpc/22.7/release/performance.csv"),
-            col_name="runtime_mean",
-            constraints={
-                "variant": "ad-loki-scc-hoist",
-                "num_cols": NUM_COLS,
-                "precision": precision,
-            },
-            x=4,
-            color="khaki",
-        ),
+        # Bar(
+        #     ds_name=os.path.join(DATA_DIR, "cloudsc2/mlux/nvhpc/22.7/release/performance.csv"),
+        #     col_name="runtime_mean",
+        #     constraints={
+        #         "variant": "ad-loki-scc-hoist",
+        #         "num_cols": NUM_COLS,
+        #         "precision": precision,
+        #     },
+        #     x=4,
+        #     color="khaki",
+        # ),
         Bar(
             ds_name=os.path.join(
                 DATA_DIR, "cloudsc2/mlux/release/2022.1/gnu/11.3.0/performance.csv"
