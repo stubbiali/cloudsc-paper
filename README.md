@@ -1,4 +1,5 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![DOI](https://zenodo.org/badge/741397037.svg)](https://zenodo.org/doi/10.5281/zenodo.11155353)
 
 This repository contains the data and scripts to produce the figures contained in the manuscript ``Exploring a high-level programming model for the NWP domain using ECMWF microphysics schemes'' by S. Ubbiali, C. Kühnlein, C. Schär, L. Schlemmer, T. C. Schulthess, M. Staneker, and H. Wernli, to be submitted for peer-review to Geoscientific Model Development (GMD). The article presents the Python rewrites using GT4Py of two IFS microphysics schemes from ECMWF: CLOUDSC and CLOUDSC2. For the latter, the corresponding tangent-linear and adjoint formulations are considered too.
 
