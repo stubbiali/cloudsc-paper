@@ -19,7 +19,7 @@ $ source venv/bin/activate
 # install requirements
 (venv) $ pip install -r requirements.txt
 
-# run any script
+# run any script; the option --save will save the image as PDF under out/img
 (venv) $ python plot_<something>.py [--show/--no-show] [--save]
 
 # deactivate the virtual environment
