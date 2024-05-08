@@ -25,7 +25,7 @@ from typing_extensions import Annotated
 NUM_COLS: int = 65536
 PROJECT_ROOT_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 DATA_DIR: str = os.path.join(PROJECT_ROOT_DIR, "data")
-IMG_DIR: str = os.path.join(PROJECT_ROOT_DIR, "img")
+IMG_DIR: str = os.path.join(PROJECT_ROOT_DIR, "out/img")
 
 
 def get_value_from_dataset(ds_name: str, col_name: str, **constraints) -> float:
