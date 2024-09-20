@@ -5,15 +5,15 @@
 
     \section{Performance analysis}
     \label{section:performance-analysis}
-       
-        In this section, we highlight the results from a comprehensive performance testing. We compare the developed CLOUDSC-GT4Py and CLOUDSC2-GT4Py codes against reference Fortran versions and various other programming prototypes. The simulations were performed on three different supercomputers: 
+
+        In this section, we highlight the results from a comprehensive performance testing. We compare the developed CLOUDSC-GT4Py and CLOUDSC2-GT4Py codes against reference Fortran versions and various other programming prototypes. The simulations were performed on three different supercomputers:
         \begin{itemize}
             \item[(i)] Piz Daint\footnote{\url{https://www.cscs.ch/computers/piz-daint}}, an HPE Cray XC40/XC50 system installed at CSCS in Lugano, Switzerland;
             \item[(ii)] MeluXina\footnote{\url{https://docs.lxp.lu/}}, an ATOS BullSequana XH2000 machine hosted by LuxConnect in Bissen, Luxembourg, and procured by the EuroHPC Joint Undertaking (JU) initiative;
             \item[(iii)] the Cray HPE EX235a supercomputer LUMI\footnote{\url{https://docs.lumi-supercomputer.eu/}}, an EuroHPC pre-exascale machine at the Science Information Technology Center (CSC) in Kajaani, Finland.
-        \end{itemize} 
-        On each machine, the CLOUDSC and CLOUDSC2 applications are executed on a single hybrid node, that sports one or multiple GPU accelerators alongside the host CPU. An overview of the node architectures for the three considered supercomputers can be found in Table \ref{tab:architecture}. 
-        
+        \end{itemize}
+        On each machine, the CLOUDSC and CLOUDSC2 applications are executed on a single hybrid node, that sports one or multiple GPU accelerators alongside the host CPU. An overview of the node architectures for the three considered supercomputers can be found in Table \ref{tab:architecture}.
+
         Besides the GT4Py codes, we involve up to four alternative lower-level programming implementations, which will be documented in an upcoming publication.
         \begin{itemize}
             \item[(a)] The baseline Fortran version, enriched with OpenMP directives for multi-threading execution on CPU.
@@ -21,7 +21,7 @@
             \item[(c)] The currently best-performing Loki generated and GPU-enabled variant.
             \item[(d)] An optimized GPU-enabled version of CLOUDSC including k-caching. The code is written either in CUDA or HIP, to target both NVIDIA GPUs (shipped with Piz Daint and MeluXina) and AMD GPUs (available on LUMI).
         \end{itemize}
-        
+
         \begin{table}[t!]
             \setlength\extrarowheight{2pt}
             \centering
@@ -45,7 +45,7 @@
             \item All implementations of CLOUDSC2TL and CLOUDSC2AD are validated using the Taylor test (cf.\,Algorithm \ref{alg:taylor-test}) and the symmetry test (cf.\,Algorithm \ref{alg:symmetry-test}), respectively. However, the conditions of both tests are not satisfied when using single precision. This is not surprising, since both tests are highly sensitive to round-off errors. Nevertheless, performance numbers for the execution of the algorithms were taken.
         \end{itemize}
         \noindent The source repositories for CLOUDSC and CLOUDSC2 dwarfs may include multiple variants of each reference implementation, varying for the optimization strategies. In our analysis, we always take into account the fastest variant of each alternative implementation; for the sake of reproducibility, Table \ref{tab:versions} contains the strings identifying the coding versions at consideration and the corresponding NPROMA employed in the runs.
-        
+
         \begin{table}[t!]
             \renewcommand{\arraystretch}{1.4}
             \centering
@@ -118,9 +118,9 @@
             \caption{Execution time on a single NUMA domain of a hybrid node of the Piz Daint supercomputer for CLOUDSC (left column), CLOUDSC2NL (center column) and the symmetry test for CLOUDSC2TL and CLOUDSC2AD (right column) using either double precision (top row) or single precision (bottom row) floating point arithmetic. The computational domain consists of 65536 columns and 137 vertical levels. Displayed are the multi-threaded Fortran baseline using OpenMP (grey); two GPU-accelerated Fortran implementations, either using OpenACC directives (lime) or the source-to-source translation tool Loki (yellow); an optimized CUDA C version (green); and the GT4Py rewrite, either using the GridTools C++ CPU backend with k-first data ordering (blue) or the DaCe GPU backend (orange). All numbers should be interpreted as an average over $50$ realizations. The panels only show the code versions available and validating at the time of writing.}
             \label{fig:performance-daint}
         \end{figure}
-        
-        \noindent For the interpretation of the CPU versus GPU performance numbers, we note that host codes are executed on all the cores available on a single Non-Uniform Memory Access (NUMA) domain of a compute node, while device codes are launched on the GPU attached to that NUMA domain. In a distributed-memory context, this choice allows to fit the same number of MPI ranks per node, either on CPU or GPU. Table \ref{tab:architecture} reports the number of NUMA partitions per node for Piz Daint, MeluXina and LUMI, with the compute and memory resources being evenly distributed across the NUMA domains. Note that the compute nodes of the GPU partition of LUMI have the low-noise mode activated, which reserves one core per NUMA domain to the operating system, so that only 7 out of 8 cores are available to the jobs. Moreover, each MI250X GPU is split into two virtual GPUs (vGPUs), with each vGPU assigned to a different NUMA domain. 
-        
+
+        \noindent For the interpretation of the CPU versus GPU performance numbers, we note that host codes are executed on all the cores available on a single Non-Uniform Memory Access (NUMA) domain of a compute node, while device codes are launched on the GPU attached to that NUMA domain. In a distributed-memory context, this choice allows to fit the same number of MPI ranks per node, either on CPU or GPU. Table \ref{tab:architecture} reports the number of NUMA partitions per node for Piz Daint, MeluXina and LUMI, with the compute and memory resources being evenly distributed across the NUMA domains. Note that the compute nodes of the GPU partition of LUMI have the low-noise mode activated, which reserves one core per NUMA domain to the operating system, so that only 7 out of 8 cores are available to the jobs. Moreover, each MI250X GPU is split into two virtual GPUs (vGPUs), with each vGPU assigned to a different NUMA domain.
+
         Figures \ref{fig:performance-daint}-\ref{fig:performance-lumi} visualize the execution times for CLOUDSC (left column), CLOUDSC2NL  (center column) and the symmetry test for CLOUDSC2TL and CLOUDSCAD (right column) for Piz Daint, MeluXina and LUMI, respectively. All performance numbers refer to a grid size of 65536 columns, with each column featuring 137 vertical levels. In each figure, execution times are provided for simulations running either entirely in double precision (FP64; top row) or in single precision (FP32; bottom row). Within each panel, the plotted bars reflect the execution time of the various codes, with a missing bar indicating the corresponding code (non-GT4Py) is either not available or not working properly. Specifically,
         \begin{itemize}
             \item the Fortran version of CLOUDSC2AD can only run on a single OpenMP thread on MeluXina (the issue is still under investigation);
@@ -128,7 +128,7 @@
             \item all Fortran-based implementations of the three formulations of CLOUDSC2 can only use double precision computations;
             \item a Loki version of CLOUDSC2TL and CLOUDSC2AD is not available at the time of writing.
         \end{itemize}
-        
+
         \begin{figure}[t!]
             \centering
             \includegraphics[scale=0.44]{performance_mlux_2.pdf}
@@ -148,7 +148,7 @@
             \caption{As Fig.\,\ref{fig:performance-daint} but for the LUMI supercomputer.}
             \label{fig:performance-lumi}
         \end{figure}
-        
+
         As used in this paper, GT4Py cannot yet attain the performance achieved by manually optimized native implementations with either Fortran on CPU or CUDA/HIP on GPU. Multi-threaded Fortran can be up to three times faster than the GridTools CPU backend of GT4Py using the k-first (C-like) memory layout, while the DaCe GPU backend of GT4Py can be up to a factor of two slower than CUDA/HIP. On the one hand, so far the development of GT4Py has been focused on GPU execution (see e.g. \cite{dahm23}), because this will be the dominant hardware for time-critical applications in the years to come. On the other hand, we stress that the k-caching CUDA and HIP variants of CLOUDSC were semi-automatically generated by performance engineering experts, starting from an automatic Fortran-to-C transpilation of the SCC variants and manually applying additional optimizations that require knowledge about the specific compute patterns in the application. This process is not scalable to the full weather model and not a sustainable code adaptation method. In contrast, no significant performance engineering has been applied yet with CLOUDSC-GT4Py and CLOUDSC2-GT4Py.
 
         \begin{figure}[t!]

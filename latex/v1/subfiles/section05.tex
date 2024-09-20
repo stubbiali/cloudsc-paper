@@ -5,14 +5,14 @@
 
     \section{Performance analysis}
     \label{section:performance-analysis}
-       
-        In this section, we highlight the results from a comprehensive performance testing. We compare the developed CLOUDSC-GT4Py and CLOUDSC2-GT4Py codes against reference Fortran versions and various other programming prototypes. The simulations were performed on three different supercomputers: 
+
+        In this section, we highlight the results from a comprehensive performance testing. We compare the developed CLOUDSC-GT4Py and CLOUDSC2-GT4Py codes against reference Fortran versions and various other programming prototypes. The simulations were performed on three different supercomputers:
         \begin{itemize}
             \item[(i)] Piz Daint\footnote{\url{https://www.cscs.ch/computers/piz-daint}}, an HPE Cray XC40/XC50 system installed at CSCS in Lugano, Switzerland;
             \item[(ii)] MeluXina\footnote{\url{https://docs.lxp.lu/}}, an ATOS BullSequana XH2000 machine hosted by LuxConnect in Bissen, Luxembourg, and procured by the EuroHPC Joint Undertaking (JU) initiative;
             \item[(iii)] the Cray HPE EX235a supercomputer LUMI\footnote{\url{https://docs.lumi-supercomputer.eu/}}, an EuroHPC pre-exascale machine at the Science Information Technology Center (CSC) in Kajaani, Finland.
-        \end{itemize} 
-        On each machine, the CLOUDSC and CLOUDSC2 applications are executed on a single hybrid node, that sports one or multiple GPU accelerators alongside the host CPU. An overview of the node architectures for the three considered supercomputers can be found in Table \ref{tab:architecture}. 
+        \end{itemize}
+        On each machine, the CLOUDSC and CLOUDSC2 applications are executed on a single hybrid node, that sports one or multiple GPU accelerators alongside the host CPU. An overview of the node architectures for the three considered supercomputers can be found in Table \ref{tab:architecture}.
 
         \begin{table}[t!]
             \setlength\extrarowheight{2pt}
@@ -30,7 +30,7 @@
             \caption{Overview of the node architecture for the hybrid partition of Piz Daint, MeluXina and LUMI. Only the technical specifications which are most relevant for the purposes of this paper are reported.}
             \label{tab:architecture}
         \end{table}
-        
+
         Besides the GT4Py codes, we involve up to four alternative lower-level programming implementations, which will be documented in an upcoming publication.
         \begin{itemize}
             \item[(a)] The baseline Fortran version, enriched with OpenMP directives for multi-threading execution on CPU.
@@ -74,14 +74,14 @@
             \caption{For each coding version of the CLOUDSC and CLOUDSC2 dwarfs considered in the performance analysis, the table reports the compiler suite used to compile the codes on Piz Daint, MeluXina and LUMI. The codes are compiled with all major optimization options enabled. Those implementations which are either not available or not working are marked with a dash; more details, as well as a high-level description of each coding implementation, are provided in the text.}
             \label{tab:compiler}
         \end{table}
-        
+
         \noindent Table \ref{tab:compiler} documents the compiler specifications employed for each of the programming implementations, on Piz Daint, MeluXina and LUMI. We consistently apply the most aggressive optimization, ensuring that the underlying code manipulations do not harm validation. For the different algorithms at consideration, validation is carried out as follows.
         \begin{itemize}
             \item For CLOUDSC and CLOUDSC2NL, the results from each coding version are directly compared with serialized reference data produced on the CPU. For each output field, we perform an element-wise comparison using the NumPy function \pyinline{allclose}\footnote{\url{https://numpy.org/devdocs/reference/generated/numpy.allclose.html}}. Specifically, the GT4Py rewrites validate on both CPU and GPU with an absolute and relative tolerance of $10^{-12}$ and $10^{-18}$ when employing double precision. When reducing the precision to 32-bits, the absolute and relative tolerance levels need to be increased to $10^{-4}$ and $10^{-7}$ on CPU, and $10^{-2}$ and $10^{-7}$ on GPU. In the latter case, we observe that the field representing the enthalpy flux of ice still does not pass validation. We attribute the larger deviation from the baseline data on the device to the different instruction sets underneath CPUs and GPUs.
             \item All implementations of CLOUDSC2TL and CLOUDSC2AD are validated using the Taylor test (cf.\,Algorithm \ref{alg:taylor-test}) and the symmetry test (cf.\,Algorithm \ref{alg:symmetry-test}), respectively. In this respect, we emphasize that the GT4Py implementations satisfy the conditions of both tests on all considered computing architectures, regardless of whether double or single precision is employed.
         \end{itemize}
         \noindent The source repositories for CLOUDSC and CLOUDSC2 dwarfs may include multiple variants of each reference implementation, varying for the optimization strategies. In our analysis, we always take into account the fastest variant of each alternative implementation; for the sake of reproducibility, Table \ref{tab:versions} contains the strings identifying the coding versions at consideration and the corresponding NPROMA\footnote{NPROMA slicing is a cache blocking technique adopted in all Fortran codes considered in this paper. Given a two-dimensional array shaped $(K * M, \, N)$, this is re-arranged as a three-dimensional array shaped $(K, \, M, \, N)$. The leading dimension of the three-dimensional array is commonly called ``NPROMA'', with $K$ being the ``NPROMA blocking factor''. For the sake of brevity, in the text we indicate $K$ simply as ``NPROMA''. For an insightful discussion on the NPROMA slicing technique, we refer the readers to, e.g., \citet{muller19} and \citet{bauer20}.} employed in the runs. Similarly, for all Python implementations we consider only the most performant backends of GT4Py: the GridTools C++ CPU backend with k-first memory layout, and the DaCe GPU backend.
-        
+
         \begin{table}[t!]
             \renewcommand{\arraystretch}{1.4}
             \centering
@@ -118,7 +118,7 @@
             \caption{Execution time on a single NUMA domain of a hybrid node of the Piz Daint supercomputer for CLOUDSC (left column), CLOUDSC2NL (center column) and the symmetry test for CLOUDSC2TL and CLOUDSC2AD (right column) using either double precision (top row) or single precision (bottom row) floating point arithmetic. The computational domain consists of 65536 columns and 137 vertical levels. Displayed are the multi-threaded Fortran baseline using OpenMP (grey); two GPU-accelerated Fortran implementations, either using OpenACC directives (lime) or the source-to-source translation tool Loki (yellow); an optimized CUDA C version (green); and the GT4Py rewrite, either using the GridTools C++ CPU backend with k-first data ordering (blue) or the DaCe GPU backend (orange). All numbers should be interpreted as an average over $50$ realizations. The panels only show the code versions available and validating at the time of writing.}
             \label{fig:performance-daint}
         \end{figure}
-        
+
         \noindent For the interpretation of the CPU versus GPU performance numbers, we note that host codes are executed on all the cores available on a single Non-Uniform Memory Access (NUMA) domain of a compute node, while device codes are launched on the GPU attached to that NUMA domain. In a distributed-memory context, this choice allows to fit the same number of MPI ranks per node, either on CPU or GPU. Table \ref{tab:architecture} reports the number of NUMA partitions per node for Piz Daint, MeluXina and LUMI, with the compute and memory resources being evenly distributed across the NUMA domains. Note that the compute nodes of the GPU partition of LUMI have the low-noise mode activated, which reserves one core per NUMA domain to the operating system, so that only 7 out of 8 cores are available to the jobs. Moreover, we highlight that each MI250X GPU consists of two Graphics Compute Dies (GCDs) connected via four AMD Infinity Fabric links but not sharing physical memory. From a software perspective, each compute node of LUMI is equipped with 8 virtual GPUs (vGPUs), with each vGPU corresponding to a single GCD and assigned to a different NUMA domain.
 
         \begin{figure}[t!]
@@ -135,7 +135,7 @@
             \item all Fortran-based implementations of the three formulations of CLOUDSC2 can only use double precision computations;
             \item a Loki version of CLOUDSC2TL and CLOUDSC2AD is not available at the time of writing.
         \end{itemize}
-        
+
         \noindent Notably, we find the GT4Py rewrite of both CLOUDSC and CLOUDSC2 to be very robust, as the codes execute on every CPU and GPU architecture included in the study, and can always employ either double or single precision floating point arithmetic. With GT4Py, changing the backend with the respective target architecture, or changing the precision of computations, is as easy as setting a namelist parameter. Moreover, at the time of writing the GT4Py implementations of the more complex tangent-linear and adjoint formulations of CLOUDSC2 were the first codes enabling GPU execution, again both in double or single precision.
 
         \begin{figure}[t!]
@@ -144,7 +144,7 @@
             \caption{As Fig.\,\ref{fig:performance-daint} but for the LUMI supercomputer.}
             \label{fig:performance-lumi}
         \end{figure}
-        
+
         The performance of the high-level Python with GT4Py compares well against Fortran with OpenACC. The runtimes for GT4Py with its DaCe backend versus OpenACC are similar on Piz Daint, MeluXina and LUMI. One outlier is the double precision result on LUMI, for which the OpenACC code appears relatively slow. We suppose this behaviour is associated with the insufficient OpenACC support for the HPE Cray compiler. Only the HPE Cray compiler implements GPU offloading capabilities for OpenACC directives on AMD GPUs, meaning that Fortran OpenACC codes require an HPE Cray platform to run on AMD GPUs. In contrast, GT4Py relies on the HIPCC compiler driver developed by AMD to compile device code for AMD accelerators, and this guarantees a proper functioning irrespective of the machine vendor. We further note that the DaCe backend of GT4Py executes roughly two times faster on MeluXina's NVIDIA A100 GPUs than on LUMI's AMD Instinct MI250X GPUs. As mentioned above, from a software perspective, each physical GPU module on LUMI is considered as two virtual GPUs, so that the code is actually executed on half of a physical GPU card. We can therefore speculate that if using both dies of an AMD Instinct MI250X GPU performance would be on par with the NVIDIA A100 GPU.
 
         Another interesting result is that both CLOUDSC-GT4Py and CLOUDSC2-GT4Py are consistently faster than the implementations generated with Loki. Loki allows to build bespoke transformation recipes to apply changes to programming models and coding styles in an automated fashion. Therefore, GPU-enabled code can be produced starting from the original Fortran by e.g., automatically adding OpenACC directives. However, because not all optimizations are yet encoded in the transformations, the Loki-generated device code cannot achieve optimal performance. Notwithstanding, source-to-source translators such as Loki are of high relevance for enabling GPU execution with large legacy Fortran code bases.

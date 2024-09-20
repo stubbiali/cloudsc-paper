@@ -8,12 +8,12 @@
     \section{A domain-specific approach to scientific software development}
     \label{section:domain-specific-approach-to-scientific-software-development}
 
-        In scientific software development, it is common practice to conceive a first proof-of-concepts implementation of a numerical algorithm in a high-level programming environment like MATLAB/Octave \citep{lindfield18}, or Python. Because these languages do not require compilation and support dynamic typing, they provide a breeding ground for fast prototyping. However, the direct adoption of interpreted languages in HPC has historically been hindered by their intrinsic slowness. To squeeze more performance out of the underlying silicon, the initial proof-of-concept is translated into either Fortran, C or C++. This leads to the so-called ``two-language problem'', where the programming language used for the germinal prototyping is abandoned in favor of a faster language that might be more complicated to use. The lower-level code can be parallelized for shared memory platforms using OpenMP directives, while distributed memory machines can be targeted using Message Passing Interface (MPI) libraries. % to handle data movements between remote memories. 
+        In scientific software development, it is common practice to conceive a first proof-of-concepts implementation of a numerical algorithm in a high-level programming environment like MATLAB/Octave \citep{lindfield18}, or Python. Because these languages do not require compilation and support dynamic typing, they provide a breeding ground for fast prototyping. However, the direct adoption of interpreted languages in HPC has historically been hindered by their intrinsic slowness. To squeeze more performance out of the underlying silicon, the initial proof-of-concept is translated into either Fortran, C or C++. This leads to the so-called ``two-language problem'', where the programming language used for the germinal prototyping is abandoned in favor of a faster language that might be more complicated to use. The lower-level code can be parallelized for shared memory platforms using OpenMP directives, while distributed memory machines can be targeted using Message Passing Interface (MPI) libraries. % to handle data movements between remote memories.
         The resulting code can later be migrated to GPUs, offering outstanding compute throughput and memory bandwidth especially for Single Instruction Multiple Data (SIMD) applications. GPU porting is accomplished using either OpenACC or OpenMP directives, or via a CUDA\footnote{\url{https://docs.nvidia.com/cuda/}} or HIP\footnote{{https://rocm.docs.amd.com/projects/HIP/en/latest/}} rewriting, amongst others. To efficiently run the model at scale on multiple GPUs, a GPU-aware MPI build should be chosen, so to possibly avoid costly memory transfers between host and device and better overlap computations and communications.
 
         \begin{figure}[t!]
             \centering
-            
+
             \begin{minipage}{0.495\textwidth}
                 \centering
                 \includegraphics[scale=0.475]{workflow_2.pdf}
@@ -42,13 +42,13 @@
             \label{fig:gt4py}
         \end{figure}
 
-        Figure \ref{fig:gt4py} showcases the main steps undertaken by the GT4Py toolchain to translate the high-level definition of the horizontal Laplacian operator into optimized code, which can be directly called from within Python. The stencil definition is given as a regular Python function using the GTScript DSL. GTScript abstracts for-loops away: computations are described for a single point of a three-dimensional Cartesian grid, and can be differentiated for the vertical boundaries using the \pyinline{interval} context manager. Vertical loops are replaced by \pyinline{computation} contexts, which define the iteration order along the vertical axis: either \pyinline{PARALLEL} (meaning no vertical data dependencies between horizontal planes), \pyinline{FORWARD} or \pyinline{BACKWARD}. Each assignment statement within a computation block can be thought of as a loop over a horizontal plane; no horizontal data dependencies are allowed. Neighbouring points are accessed through relative offsets, with the first two offsets being the horizontal offsets, and the last offset being the vertical offset. 
+        Figure \ref{fig:gt4py} showcases the main steps undertaken by the GT4Py toolchain to translate the high-level definition of the horizontal Laplacian operator into optimized code, which can be directly called from within Python. The stencil definition is given as a regular Python function using the GTScript DSL. GTScript abstracts for-loops away: computations are described for a single point of a three-dimensional Cartesian grid, and can be differentiated for the vertical boundaries using the \pyinline{interval} context manager. Vertical loops are replaced by \pyinline{computation} contexts, which define the iteration order along the vertical axis: either \pyinline{PARALLEL} (meaning no vertical data dependencies between horizontal planes), \pyinline{FORWARD} or \pyinline{BACKWARD}. Each assignment statement within a computation block can be thought of as a loop over a horizontal plane; no horizontal data dependencies are allowed. Neighbouring points are accessed through relative offsets, with the first two offsets being the horizontal offsets, and the last offset being the vertical offset.
 
         Any function marked with the \pyinline{gt4py.cartesian.gtscript.stencil} decorator is translated by the GT4Py \emph{frontend} into a hierarchy of tree-like Intermediate Representations (IRs), featuring different levels of abstractions to accommodate diverse optimizations and transformations \citep{gysi21}. The lowest-level IR (denoted as Implementation IR, or IIR) is consumed by the \emph{backends} to generate code that is either optimized for a given architecture or suited to a specific purpose. The following backends are currently available:
         \begin{itemize}
             \item NumPy \citep{harris20} is the \emph{de facto} standard for array computing in Python, and can be used for debugging and fast-prototyping;
             \item GridTools \citep{afanasyev21} is a set of libraries and utilities to write performance-portable applications in the area of weather and climate;
-            \item DaCe \citep{ben-nun19} is a parallel programming framework, which internally uses the Stateful DataFlow multiGraph (SDFG) data-centric intermediate representation to decouple domain science and performance engineering. 
+            \item DaCe \citep{ben-nun19} is a parallel programming framework, which internally uses the Stateful DataFlow multiGraph (SDFG) data-centric intermediate representation to decouple domain science and performance engineering.
         \end{itemize}
         The generated code is compiled under the hood, and Python bindings for the resulting executable are automatically produced, so that the stencil can finally be executed by passing the input and output fields and by specifying the origin and size of the computation domain. GT4Py provides convenient utilities to allocate arrays with an optimal memory layout for any given backend, relying on NumPy for CPU storages and CuPy \citep{nishino17} for GPU storages. Concerning GPU computing, we highlight that GT4Py supports both NVIDIA and AMD GPUs.
 
@@ -86,10 +86,10 @@ def saturation(
             qs = min(ew / in_ap, QMAX)
         out_qsat[0, 0, 0] = qs / (1.0 - RETV * qs)
             \end{minted}
-            
+
             \caption{GTScript (the Python-embedded DSL exposed by GT4Py) functions and stencil computing the saturation water vapor pressure given the air pressure and temperature. Abridged excerpt from the CLOUDSC2-GT4Py dwarf.}
             \label{lst:saturation-stencil}
         \end{listing}
-    
+
     \biblio
 \end{document}

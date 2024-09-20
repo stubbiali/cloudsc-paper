@@ -61,4 +61,3 @@ distclean: clean
 	$(RM) $(BIB_TRG)
 	$(RM) $(MAIN_TRG)
 	$(RM) -r _minted-main
-

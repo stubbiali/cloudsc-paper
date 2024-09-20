@@ -7,7 +7,7 @@
 %% merlin.mbs  (with options: `head,ay,nat,seq-key,nm-rev,ed-rev,keyxyr,blkyear,dt-end,note-yr,atit-u,jttl-rm,vnum-x,volp-com,pgsep-s,num-xser,btit-rm,bt-rm,isbn,issn,doi,url-doi,edby,blk-com,au-col,in-col,pp,ed,abr,xedn,jabr,url,url-nt,nfss,')
 %% ----------------------------------------
 %% *** For journals of Copernicus Publications ***
-%% 
+%%
 %% Copyright 1994-2011 Patrick W Daly
  % ===============================================================
  % IMPORTANT NOTICE:

@@ -29,9 +29,9 @@
                     \State \textbf{return} 0
                 \EndIf
             \EndFunction
-            
+
             \Statex
-            
+
             \Procedure{TaylorTest}{$ncol, \, nlev, \, nin, \, nout, \, \mathbf{x}$} \Comment{$\mathbf{x} \in \mathbb{R}^{ncol \times nlev \times nin}$}
 
             %\State $\mathbf{y} ~ \gets ~$ \Call{CLOUDSC2NL}{$\mathbf{x}$}
@@ -78,7 +78,7 @@
     \begin{algorithm}[t!]
         \caption{The symmetry test assessing the formal correctness of the coding implementation of the adjoint formulation of CLOUDSC2, denoted as \textsc{CLOUDSC2AD}. The machine epsilon is indicated as $\varepsilon$; all other symbols have the same meaning as in Algorithm \ref{alg:taylor-test}. Note that compared to its functional counterpart $F^* \left[ F \left( \boldsymbol{x} \right) \right] : \delta \boldsymbol{y} \mapsto \delta \boldsymbol{x}^*$, \textsc{CLOUDSC2AD($\mathbf{x}, \, \delta \mathbf{y}$)} returns both $\mathbf{y}$ and $\delta \mathbf{x}^*$.}
         \label{alg:symmetry-test}
-    
+
         \begin{algorithmic}[1]
             \Function{ColumnWiseInnerProduct}{$ncol, \, nlev, \, ndim, \, \mathbf{a}, \, \mathbf{b}$} \Comment{$\mathbf{a}, \, \mathbf{b} \in \mathbb{R}^{ncol \times nlev \times ndim}$}
                 \State $\boldsymbol{c} ~ \gets ~ \mathbf{0} \in \mathbb{R}^{ncol}$
@@ -89,18 +89,18 @@
                 \EndFor
                 \State \textbf{return} $\boldsymbol{c}$
             \EndFunction
-    
+
             \Statex
-            
+
             \Procedure{SymmetryTest}{$ncol, \, nlev, \, nin, \, nout, \, \mathbf{x}, \varepsilon$} \Comment{$\mathbf{x} \in \mathbb{R}^{ncol \times nlev \times nin}$}
-    
+
             \State $\delta \mathbf{x} ~ \gets ~ 0.01 * \mathbf{x}$
             \State $\left( \mathbf{y}, \, \delta \mathbf{y} \right) ~ \gets ~ \Call{CLOUDSC2TL}{\mathbf{x}, \, \delta \mathbf{x}}$ \Comment{$\mathbf{y}, \, \delta \mathbf{y} \in \mathbb{R}^{ncol \times nlev \times nout}$}
-            
+
             \State $\left( \mathbf{y}, \, \delta \mathbf{x}^* \right) ~ \gets ~ \Call{CLOUDSC2AD}{\mathbf{x}, \, \delta \mathbf{y}}$ \Comment{$\mathbf{x}^*, \, \delta \mathbf{x}^* \in \mathbb{R}^{ncol \times nlev \times nin}$}
             \State $\boldsymbol{c}_{\mathbf{y}} ~ \gets ~ \Call{ColumnWiseInnerProduct}{ncol, \, nlev, \, nout, \, \delta \mathbf{y}, \, \delta \mathbf{y}}$
             \State $\boldsymbol{c}_{\mathbf{x}} ~ \gets ~ \Call{ColumnWiseInnerProduct}{ncol, \, nlev, \, nin, \, \delta \mathbf{x}, \, \delta \mathbf{x}^*}$
-    
+
             \State $success ~ \gets ~ \text{True}$
             \For{i}{1}{ncol}
                 \If{$\boldsymbol{c}_{\mathbf{x}}(i) = 0$}

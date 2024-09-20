@@ -5,13 +5,13 @@
 %% The original source files were:
 %%
 %% copernicus.dtx  (with options: `class')
-%% 
+%%
 %% -----------------------------------------------------------------
 %% Author:     copernicus.org and le-tex publishing services
-%% 
+%%
 %% This file is part of the copernicus package for papers
 %% published by Copernicus Publications (Copernicus GmbH).
-%% 
+%%
 %%       Copyright (C) 2023 by Copernicus Publications
 %% -----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]

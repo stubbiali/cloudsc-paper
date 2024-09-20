@@ -117,7 +117,7 @@
 %DIF 114c114
 %DIF < %\newcommand{\matr}[1]{\mathbf{#1}}  % undergraduate algebra version
 %DIF -------
-\newcommand{\matr}[1]{\mathbf{#1}}  % undergraduate algebra version %DIF > 
+\newcommand{\matr}[1]{\mathbf{#1}}  % undergraduate algebra version %DIF >
 %DIF -------
 %\newcommand{\matr}[1]{#1}          % pure math version
 %\newcommand{\matr}[1]{\bm{#1}}     % ISO complying version
@@ -218,7 +218,7 @@
 %DIF 211c211
 %DIF < %\usepackage{algorithm}
 %DIF -------
-\usepackage{algorithm} %DIF > 
+\usepackage{algorithm} %DIF >
 %DIF -------
 \usepackage[noend]{algpseudocode}
 
@@ -228,9 +228,9 @@
 %DIF < %\algrenewtext{For}[3]%
 %DIF < %{\algorithmicfor\ $#1 \gets #2$ \algorithmicto\ $#3$ \algorithmicdo}
 %DIF -------
-\algnewcommand\algorithmicto{\textbf{to}} %DIF > 
-\algrenewtext{For}[3]% %DIF > 
-{\algorithmicfor\ $#1 \gets #2$ \algorithmicto\ $#3$ \algorithmicdo} %DIF > 
+\algnewcommand\algorithmicto{\textbf{to}} %DIF >
+\algrenewtext{For}[3]% %DIF >
+{\algorithmicfor\ $#1 \gets #2$ \algorithmicto\ $#3$ \algorithmicdo} %DIF >
 %DIF -------
 
 % redefine \Require and \Ensure for algorithm environment
@@ -282,11 +282,11 @@
 \linenumbers
 
 %DIF 267a267-271
-% ============================================================ %DIF > 
-% subfiles %DIF > 
-% ============================================================ %DIF > 
-\usepackage{subfiles} %DIF > 
- %DIF > 
+% ============================================================ %DIF >
+% subfiles %DIF >
+% ============================================================ %DIF >
+\usepackage{subfiles} %DIF >
+ %DIF >
 %DIF -------
 % allow \cite in subfiles
 \makeatletter
@@ -298,7 +298,7 @@
 %DIF 274c279
 %DIF < %\def\biblio{\bibliography{references}}
 %DIF -------
-\def\biblio{\bibliography{references}} %DIF > 
+\def\biblio{\bibliography{references}} %DIF >
 %DIF -------
 
 % ============================================================
@@ -307,12 +307,12 @@
 \usepackage{setspace}
 %\doublespacing
 %DIF 281-286d286
-%DIF < 
+%DIF <
 %DIF < % ============================================================
 %DIF < % subfiles
 %DIF < % ============================================================
 %DIF < \usepackage{subfiles}
-%DIF < 
+%DIF <
 %DIF -------
 
 % ============================================================
@@ -498,7 +498,7 @@
 
 	\subsection{CLOUDSC2: Cloud microphysics in the context of data assimilation}
 	\DIFaddbegin \label{section:cloudsc2}
-\DIFaddend 
+\DIFaddend
 
 	The CLOUDSC2 scheme represents a streamlined version of CLOUDSC, devised for use in the four-dimensional variational assimilation (4D-Var) at ECMWF \citep{courtier94}. 4D-Var merges short-term model integrations with observations over a twelve-hour assimilation window to determine the best possible representation of the current state of the atmosphere. This then provides the initial conditions for longer-term forecasts \citep{janiskova23}. The optimal synthesis between model and observational data is found by minimizing a cost function, which is evaluated using the \emph{tangent-linear} of the \emph{non-linear} forecasting model, while the \emph{adjoint} model is employed to compute the gradient of the cost function \citep{errico97, janiskova99}. For the sake of computational economy, the tangent-linear and adjoint operators are derived from a simplified and regularized version of the full non-linear model. The CLOUDSC2 is one of the physical parametrizations included in the ECMWF's simplified model, together with radiation, vertical diffusion, orographic wave drag, moist convection, and non-orographic gravity wave activity \citep{janiskova23}. In the following, we provide a mathematical and algorithmic representation of the tangent-linear and adjoint versions of CLOUDSC2. For the sake of brevity, in the rest of the paper we will refer to the non-linear, tangent-linear and adjoint formulations of CLOUDSC2 using CLOUDSC2NL, CLOUDSC2TL and CLOUDSC2AD, respectively.
 
@@ -512,7 +512,7 @@
 \DIFdel{.}}
 		%DIFAUXCMD
 %DIFDELCMD < \label{alg:taylor-test}
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 		\begin{algorithmic}[1]
 %DIFDELCMD < 			%%%
@@ -525,11 +525,11 @@
 			%DIF <      \EndFor
 			%DIF <      \State \textbf{return} $field\_sum$
 			%DIF <  \EndFunction
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 			%%%
 %DIF <  \Statex
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 			\Function{TotalNorm}{$ncol, \, nlev, \, nout, \, \mathbf{y}, \, \mathbf{y}_j, \, \delta \mathbf{y}_j$} \Comment{$\mathbf{y}, \, \mathbf{y}_j, \, \delta \mathbf{y}_j \in \mathbb{R}^{ncol \times nlev \times nout}$}
 %DIFDELCMD < 			\State %%%
@@ -560,13 +560,13 @@
 \DIFdel{0
 			}%DIFDELCMD < \EndIf
 %DIFDELCMD < 			\EndFunction
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 			\Statex
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 			\Procedure{TaylorTest}{$ncol, \, nlev, \, nin, \, nout, \, \mathbf{x}$} \Comment{$\mathbf{x} \in \mathbb{R}^{ncol \times nlev \times nin}$}
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 			%%%
 %DIF < \State $\mathbf{y} ~ \gets ~$ \Call{CLOUDSC2NL}{$\mathbf{x}$}
@@ -591,7 +591,7 @@
 \DIFdel{$jstart \gets j$
 				}%DIFDELCMD < \EndIf
 %DIFDELCMD < 			\EndFor
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 			\State{$test ~ \gets ~ -10$}
 %DIFDELCMD < 			\State{$negat ~ \gets ~ \text{True}$}
@@ -629,7 +629,7 @@
 %DIFDELCMD < 			\EndProcedure
 %DIFDELCMD < 		\end{algorithmic}
 %DIFDELCMD < 	\end{algorithm}
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 	%%%
 \DIFdelend Let $F: \boldsymbol{x} \mapsto \boldsymbol{y}$ be the functional description of CLOUDSC2, connecting the input fields $\boldsymbol{x}$ with the output variables $\boldsymbol{y}$. The tangent-linear operator $F'$ of $F$ is derived from the Taylor series expansion
@@ -663,7 +663,7 @@
 \DIFdel{returns both $\mathbf{y}$ and $\delta \mathbf{x}^*$.}}
 		%DIFAUXCMD
 %DIFDELCMD < \label{alg:symmetry-test}
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 		\begin{algorithmic}[1]
 %DIFDELCMD < 			\Function{ColumnWiseInnerProduct}{$ncol, \, nlev, \, ndim, \, \mathbf{a}, \, \mathbf{b}$} \Comment{$\mathbf{a}, \, \mathbf{b} \in \mathbb{R}^{ncol \times nlev \times ndim}$}
@@ -679,13 +679,13 @@
 \textbf{\DIFdel{return}} %DIFAUXCMD
 \DIFdel{$\boldsymbol{c}$
 			}%DIFDELCMD < \EndFunction
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 			\Statex
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 			\Procedure{SymmetryTest}{$ncol, \, nlev, \, nin, \, nout, \, \mathbf{x}, \varepsilon$} \Comment{$\mathbf{x} \in \mathbb{R}^{ncol \times nlev \times nin}$}
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 			\State %%%
 \DIFdel{$\delta \mathbf{x} ~ \gets ~ 0.01 * \mathbf{x}$
@@ -697,7 +697,7 @@
 \DIFdel{$\left( \mathbf{y}, \, \delta \mathbf{x}^* \right) ~ \gets ~ \Call{CLOUDSC2AD}{\mathbf{x}, \, \delta \mathbf{y}}$ }%DIFDELCMD < \Comment{$\mathbf{x}^*, \, \delta \mathbf{x}^* \in \mathbb{R}^{ncol \times nlev \times nin}$}
 %DIFDELCMD < 			\State %%%
 \DIFdel{$\boldsymbol{c}_{\mathbf{x}} ~ \gets ~ \Call{ColumnWiseInnerProduct}{ncol, \, nlev, \, nin, \, \delta \mathbf{x}, \, \delta \mathbf{x}^*}$
-}%DIFDELCMD < 
+}%DIFDELCMD <
 
 %DIFDELCMD < 			\State %%%
 \DIFdel{$success ~ \gets ~ \text{True}$
@@ -726,10 +726,10 @@
 %DIFDELCMD < 			\EndProcedure
 %DIFDELCMD < 		\end{algorithmic}
 %DIFDELCMD < 	\end{algorithm}
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 	\vspace*{2cm}
-%DIFDELCMD < 
+%DIFDELCMD <
 
 %DIFDELCMD < 	%%%
 \DIFdelend % ============================================================
@@ -974,7 +974,7 @@ class Saturation(DiagnosticComponent):
 and \mbox{%DIFAUXCMD
 \citet{bauer20}}\hskip0pt%DIFAUXCMD
 .}} \DIFaddend employed in the runs. \DIFaddbegin \DIFadd{Similarly, for all Python implementations we consider only the most performant backends of GT4Py: the GridTools C++ CPU backend with k-first memory layout, and the DaCe GPU backend.
-}\DIFaddend 
+}\DIFaddend
 
 	\begin{table}[t!]
 		\renewcommand{\arraystretch}{1.4}
@@ -1053,7 +1053,7 @@ and \mbox{%DIFAUXCMD
 	\end{figure}
 
 	To rule out the possibility that the performance gap between the Python DSL and lower-level codes is associated with overhead originating from Python, Fig.\,\ref{fig:runtime-fraction} displays the fraction of runtime spent within the stencil code generated by GT4Py and the high-level Python code of the application (infrastructure and framework code; see Section \ref{section:infrastructure-code}). Across the three supercomputers, the Python overhead decreases as (i) the complexity and length of computations increase, (ii) the peak throughput and bandwidth delivered by the hardware underneath decrease, and (iii) the floating point precision increases. On average, the Python overhead accounts for $5.4\,\%$ of the total runtime on GPU and $0.4\,\%$ on CPU. \DIFaddbegin \DIFadd{Interestingly, if one takes into account only the cases for which a working Fortran CPU implementation is available, even if the GT4Py performance was on par with Fortran, the Python overhead would still amount to less than $0.7\,\%$ of the total execution time on average.
-}\DIFaddend 
+}\DIFaddend
 
 	Finally, we observe a significant sensitivity of the GPU performance with respect to the thread block size\footnote{In the Fortran code, the thread block size corresponds to the NPROMA.}: for values smaller than 128, performance is degraded across all implementations, with the gap between CUDA/HIP and GT4Py+DaCe being smaller. This shows that some tuning and toolchain optimizations can be performed to improve performance with the DSL approach.
 
@@ -1068,7 +1068,7 @@ and \mbox{%DIFAUXCMD
 	In both CLOUDSC-GT4Py and CLOUDSC2-GT4Py, the stencil kernels are encapsulated within model components sharing a minimal and clear interface. By avoiding any assumption on the host model, the interface aims to provide interoperable and plug-and-play physical packages, which can be transferred more easily between different modeling systems with virtually no performance penalty.
 
 	We carried out a comprehensive study to assess the portability of the Python codes across three major supercomputers, differing in terms of the vendor, the node architecture, the software stack and the compiler suites. We showed that the GPU performance of GT4Py codes are competitive against optimized Fortran OpenACC implementations and perform particularly well when compared to the available codes generated with the Loki source-to-source translation tool. Low-level implementations written either in Fortran for CPUs or CUDA/HIP for GPUs, with additional optimizations that possibly require knowledge about the specific compute patterns, can provide better performance, but are extremely challenging to create and maintain for entire models. The CPU performance of GT4Py is currently suboptimal, but this is an expected result given the focus on GPUs in the DSL development so far and we clearly expect this to improve significantly with upcoming and future GT4Py versions. \DIFaddbegin \DIFadd{Indeed, since the DSL can accommodate any specific low-level optimization, attaining the same performance as native Fortran and CUDA/HIP models is feasible and will be the target of our future efforts.
-}\DIFaddend 
+}\DIFaddend
 
 	The presented results, based on a representative physical parametrization and considering tangent-linear and adjoint versions, add to the notion that weather and climate model codes can execute significantly faster on GPUs \citep{fuhrer18}, and the number of HPC systems with accelerators is steadily increasing\footnote{In the 62\textsuperscript{nd} edition of the TOP500 list published in November 2023, 186 out of the 500 most powerful supercomputers in the world use graphics accelerator technology (\url{https://www.top500.org/lists/top500/2023/11/highs/}).}. Therefore, we envision that CPUs will be increasingly relegated to tasks that are not time-critical.
 
@@ -1229,7 +1229,7 @@ and \mbox{%DIFAUXCMD
 	\DIFdelbegin %DIFDELCMD < \bibliography{references_v0}
 %DIFDELCMD < %%%
 \DIFdelend \DIFaddbegin \bibliography{references_v1}
-\DIFaddend 
+\DIFaddend
 
 % ============================================================
 % end document
