@@ -1,6 +1,0 @@
-black
-click
-matplotlib
-numpy
-pandas
-pydantic>=2.0
