@@ -1,0 +1,289 @@
+% ============================================================
+% packages: base packages and hardly taggable stuff
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{newunicodechar}
+\usepackage{lmodern}
+\usepackage{anyfontsize}
+\usepackage{enumitem}  % in conflict with \usepackage{enumerate}
+%\usepackage{fourier}  % style
+%\usepackage{lipsum}  % dummy text
+%\usepackage{authblk}  % footnote style author/affiliation
+%\usepackage[top=2cm, bottom=3cm, left=2cm, right=2cm, scale=0.75]{geometry}  % set the margins
+%\usepackage[inner=3cm, textwidth=445pt, scale=0.75, top=3cm, bottom=3cm]{geometry}  % set the margins (book style)
+\usepackage{fancyvrb}  % insert verbatim within a command
+\usepackage{fancyhdr}  % set header and footer
+\usepackage[letterspace=150]{microtype}  % improved typographics
+\usepackage{textcomp}  % more text symbols
+% \usepackage{gensymb}  % more text and math symbols - clash!!!
+\usepackage{bbm}  % blackboard-style cm fonts
+\usepackage{csvsimple}  % csv file processing
+\usepackage[bottom]{footmisc}  % footnotes at the bottom of the page
+\usepackage{stackengine}  % stack objects vertically in a variety of customizable ways
+\usepackage{ragged2e}  % \justify
+
+% new page
+\newcommand{\NewPage}{\newpage\null\thispagestyle{empty}\newpage}
+
+% no indent
+%\setlength\parindent{0pt}
+
+% ============================================================
+% packages: math
+% ============================================================
+\usepackage{bm}  % access bold symbols in math mode
+\usepackage{amsmath,etoolbox}
+\allowdisplaybreaks
+\usepackage{amsfonts}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{empheq}
+\usepackage{cases}
+\usepackage{mathtools}
+\usepackage{nicefrac}  % diagonal fractions
+
+% ============================================================
+% math aliases and commands
+% ============================================================
+% enumerate subequations with arabic numbers (e.g. 1.1, 1.2, ecc)
+\patchcmd{\subequations}{\def\theequation{\theparentequation\alph{equation}}}{\def\theequation{\theparentequation.\arabic{equation}}}{}{}
+
+%\usepackage{chngcntr}
+%\counterwithout{equation}{section} % undo numbering system provided by phstyle.cls
+%\counterwithin{equation}{chapter}  % implement desired numbering system
+
+% absolute value
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+
+% argmin
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% norm symbol
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+% mod symbol
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+% aliases for \widetilde
+\newcommand{\wt}[1]{\widetilde{#1}}
+
+% make \big| adapt to the context
+\makeatletter
+\let\amstexbig\big
+\def\newbig#1{%
+  \ifx#1|%
+	\expandafter\@firstoftwo
+  \else
+	\expandafter\@secondoftwo
+  \fi
+  {\big@bar}%
+  {\amstexbig{#1}}%
+}
+\AtBeginDocument{\let\big\newbig}
+\def\big@bar{\bBigg@{1.1}|}
+\makeatother
+
+% theorem and definition environment
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\theoremstyle{proposition}
+\newtheorem{proposition}{Proposition}[section]
+%\newenvironment{definition}[1][Definition]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+% enumerate the equations and the figures according to the section they are in
+%\numberwithin{equation}{section}
+%\numberwithin{figure}{chapter}
+
+% inline fractions settings
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\topfraction}{0.9}
+
+% matrices
+\newcommand{\matr}[1]{\mathbf{#1}}  % undergraduate algebra version
+%\newcommand{\matr}[1]{#1}          % pure math version
+%\newcommand{\matr}[1]{\bm{#1}}     % ISO complying version
+
+% interrupting and resuming subequations
+\makeatletter
+\newcounter{qrr@oldeq}
+\newcounter{qrr@oldsubeq}
+\newcounter{qrr@realeq}
+\renewenvironment{subequations}{%
+  \refstepcounter{equation}%
+  \protected@edef\theparentequation{\theequation}%
+  \setcounter{parentequation}{\value{equation}}%
+  \setcounter{equation}{0}%
+  \def\theequation{\theparentequation\alph{equation}}%
+  \ignorespaces
+}{%
+  \setcounter{qrr@oldeq}{\value{parentequation}}%
+  \setcounter{qrr@oldsubeq}{\value{equation}}%
+  \setcounter{equation}{\value{parentequation}}%
+  \ignorespacesafterend
+}
+\newenvironment{subequations*}{%
+  \setcounter{qrr@realeq}{\value{equation}}%
+  \let\theparentequation\theequation%
+  \patchcmd{\theparentequation}{equation}{parentequation}{}{}%
+  \setcounter{parentequation}{\numexpr\value{qrr@oldeq}-1}%
+  \setcounter{equation}{\value{qrr@oldsubeq}}%
+  \def\theequation{\theparentequation\alph{equation}}%
+  \refstepcounter{parentequation}%
+  \ignorespaces
+}{%
+  \setcounter{qrr@oldeq}{\value{parentequation}}%
+  \setcounter{qrr@oldsubeq}{\value{equation}}%
+  \setcounter{equation}{\value{qrr@realeq}}%
+  \ignorespacesafterend
+}
+\makeatother
+
+% aliases for greek letters
+\newcommand{\bchi}{\bm{\chi}}
+\newcommand{\bphi}{\bm{\phi}}
+\newcommand{\bpsi}{\bm{\psi}}
+\newcommand{\bxi}{\bm{\xi}}
+
+% imaginary unit
+\newcommand{\iu}{\text{i}}
+
+% math environments patched to enable proper line numbering
+% \newenvironment{myeq}{\begin{linenomath*}\begin{equation}}{\end{equation}\end{linenomath*}}
+% \newenvironment{myeq*}{\begin{linenomath*}\begin{equation*}}{\end{equation*}\end{linenomath*}}
+% \newenvironment{myalign}{\begin{linenomath*}\begin{align}}{\end{align}\end{linenomath*}}
+% \newenvironment{myalign*}{\begin{linenomath*}\begin{align*}}{\end{align*}\end{linenomath*}}
+
+% ============================================================
+% packages: tabular
+% ============================================================
+\usepackage{longtable}
+\usepackage{tabu}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{hhline}
+
+% ============================================================
+% packages: hyperlinks
+% ============================================================
+% \RequirePackage[hyphens]{url}
+% \PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\usepackage{breakurl}
+\usepackage{url}
+
+% ============================================================
+% packages: graphics
+% ============================================================
+%\usepackage{floatrow}	% notes below a figure
+\usepackage{pdfpages}  % include pdf documents
+\usepackage{graphicx}  	
+\usepackage{epstopdf}
+%\epstopdfsetup{outdir=/Users/subbiali/Desktop/phd/manuscripts/pdc_paper/img/epstopdf/}
+\usepackage{float}
+\usepackage[position = top]{subfig}
+\usepackage{wrapfig}
+\usepackage[labelfont=bf,labelsep=period,font=small]{caption}
+% \usepackage{subcaption}  % in conflict with \usepackage{subfloat}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+
+% modify the space between figure and caption
+%\setlength{\abovecaptionskip}{-4pt}
+%\setlength{\belowcaptionskip}{3pt}
+
+% ============================================================
+% packages: pseudocode
+% ============================================================
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+% fancy "for" block
+\algnewcommand\algorithmicto{\textbf{to}}
+\algrenewtext{For}[3]%
+{\algorithmicfor\ $#1 \gets #2$ \algorithmicto\ $#3$ \algorithmicdo}
+
+% redefine \Require and \Ensure for algorithm environment
+%\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+%\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+% define the do-while loop
+%\algdef{SE}[DOWHILE]{DoWhile}{EndDoWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}
+
+% ============================================================
+% packages: fancy boxes
+% ============================================================
+\usepackage[export]{adjustbox}
+
+\usepackage[many]{tcolorbox}
+%\makeatletter
+%	\renewcommand*\l@figure{\@dottedtocline{1}{1em}{3.2em}}
+%\makeatother
+
+% ============================================================
+% packages: listings
+% ============================================================
+\usepackage{listings}
+
+% minted: package for formatting and highlighting source code
+\usepackage[cache=true]{minted}
+\usemintedstyle{default}
+\setminted{mathescape, escapeinside=||, tabsize=4, fontfamily=tt}
+\newmint[py]{python}{python3=true}
+\newmintinline[pyinline]{python}{python3=true}
+
+% ============================================================
+% packages: bibliography
+% ============================================================
+% \usepackage[authoryear, round, sort, nonamebreak]{natbib}
+\bibliographystyle{copernicus}
+
+% ============================================================
+% graphics path
+% ============================================================
+\graphicspath{{./../../img}}
+
+% ============================================================
+% packages: template specific
+% ============================================================
+\usepackage{lineno}
+% \usepackage[inline]{trackchanges} %for better track changes. finalnew option will compile document with changes incorporated.
+\usepackage{soul}
+\linenumbers
+
+% ============================================================
+% subfiles
+% ============================================================
+\usepackage{subfiles}
+
+% allow \cite in subfiles
+\makeatletter
+\patchcmd{\nocite}{\ifx\@onlypreamble\document}{\iftrue}{}{}
+\makeatother
+
+% make references pop-up in subfiles
+% note: this does not seem to work...
+\def\biblio{\bibliography{references}}
+
+% ============================================================
+% line spacing
+% ============================================================
+\usepackage{setspace}
+%\doublespacing
+
+% ============================================================
+% custom commands
+% ============================================================
+%\newcommand{\review}[1]{\textcolor{red}{\underline{#1}}}
+\newcommand{\review}[1]{\textcolor{red}{#1}}

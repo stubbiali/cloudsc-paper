@@ -26,7 +26,7 @@ from plot_runtime_mlux import NUM_THREADS as NUM_THREADS_MLUX
 
 
 # config: start
-FIGSIZE_IN_INCH: tuple[int, int] = (40, 20)
+FIGSIZE_IN_INCH: tuple[int, int] = (40, 14)
 # config: end
 
 
@@ -336,36 +336,29 @@ def main(show: bool, save: bool) -> None:
     cm_to_inch = 1 / 2.54
     figsize_in_cm = tuple(dim * cm_to_inch for dim in FIGSIZE_IN_INCH)
     fig = plt.figure(figsize=figsize_in_cm)
-    gs = fig.add_gridspec(3, 3, height_ratios=(1, 1, 0.05))
+    gs = fig.add_gridspec(2, 3, height_ratios=(1, 0.10))
     ax_00 = fig.add_subplot(gs[0, 0])
     ax_01 = fig.add_subplot(gs[0, 1])
     ax_02 = fig.add_subplot(gs[0, 2])
-    ax_10 = fig.add_subplot(gs[1, 0])
-    ax_11 = fig.add_subplot(gs[1, 1])
-    ax_12 = fig.add_subplot(gs[1, 2])
-    ax_leg = fig.add_subplot(gs[2, :])
+    ax_leg = fig.add_subplot(gs[1, :])
 
     data_00, data_01, data_02 = get_data("performance.csv", "runtime_mean", "double")
     data_stencils_00, data_stencils_01, data_stencils_02 = get_data(
         "performance_stencils.csv", "stencils", "double"
     )
-    data_10, data_11, data_12 = get_data("performance.csv", "runtime_mean", "single")
-    data_stencils_10, data_stencils_11, data_stencils_12 = get_data(
-        "performance_stencils.csv", "stencils", "single"
-    )
     handles = fill_ax_x0(ax_00, data_00, data_stencils_00)
-    fill_ax_x0(ax_10, data_10, data_stencils_10)
+    ax_00.set_title("(a) CLOUDSC", loc="center", fontsize=17, fontweight="bold")
     fill_ax_x1(ax_01, data_01, data_stencils_01)
-    fill_ax_x1(ax_11, data_11, data_stencils_11)
+    ax_01.set_title("(b) CLOUDSC2: Non-linear", loc="center", fontsize=17, fontweight="bold")
     fill_ax_x2(ax_02, data_02, data_stencils_02)
-    fill_ax_x2(ax_12, data_12, data_stencils_12)
+    ax_02.set_title("(c) CLOUDSC2: Symmetry test", loc="center", fontsize=17, fontweight="bold")
 
     ax_leg.axis("off")
     labels = [
         data_00[0].label,
         data_00[1].label,
-        "Stencil computations (generated code)",
-        "Python overhead (infrastructure and framework code)",
+        "Stencil computations (GT4Py generated code)",
+        "Python overhead (Tasmania infrastructure and framework)",
     ]
     ax_leg.legend(
         handles,
@@ -373,7 +366,7 @@ def main(show: bool, save: bool) -> None:
         loc="center",
         framealpha=1,
         ncol=2,
-        fontsize=14,
+        fontsize=16,
     )
 
     fig.tight_layout()

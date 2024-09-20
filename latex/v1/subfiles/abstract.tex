@@ -1,0 +1,13 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+	\justify
+
+	% A good Abstract will begin with a short description of the problem
+	% being addressed, briefly describe the new data or analyses, then
+	% briefly states the main conclusion(s) and how they are supported and
+	% uncertainties.
+	\begin{abstract}
+        We explore the domain-specific Python library GT4Py (GridTools for Python) for implementing a representative physical parametrization scheme and the related tangent-linear \& adjoint algorithms from the Integrated Forecasting System (IFS) of ECMWF. GT4Py encodes stencil operators in an abstract and hardware-agnostic fashion, thus enabling more concise, readable and maintainable scientific applications. The library achieves high performance by translating the application into targeted low-level coding implementations. Here, the main goal is to study the correctness and performance-portability of the Python rewrites with GT4Py against the reference Fortran code and a number of automatically and manually ported variants created by ECMWF. The present work is part of a larger cross-institutional effort to port weather and climate models to Python with GT4Py. The focus of the current work is the IFS prognostic cloud microphysics scheme, a core physical parametrization represented by a comprehensive code that takes a significant share of the total forecast model execution time. In order to verify GT4Py for Numerical Weather Prediction (NWP) systems, we put additional emphasis on the implementation and validation of the tangent-linear and adjoint model versions which are employed in data assimilation. We benchmark all prototype codes on three European supercomputers characterized by diverse GPU and CPU hardware, node designs, software stacks and compiler suites. Once the application is ported to Python with GT4Py, we find excellent portability, competitive GPU performance, and robust execution in all tested scenarios including with single precision.
+	\end{abstract}
+\end{document}

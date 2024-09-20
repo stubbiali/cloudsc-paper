@@ -1,0 +1,121 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+    \section{Algorithmic description of the Taylor test and symmetry test for CLOUDSC2}
+    \label{section:appendix}
+
+    In Section \ref{section:cloudsc2}, we briefly described the aim and functioning of the Taylor test and the symmetry test for CLOUDSC2. Here, we detail the logical steps performed by the two tests with the help of pseudo-codes encapsulated in Algorithms \ref{alg:taylor-test} and \ref{alg:symmetry-test}.
+
+    \begin{algorithm}[H]
+        \caption{The Taylor test assessing the formal correctness of the coding implementation of the tangent-linear formulation of CLOUDSC2, denoted as \textsc{CLOUDSC2TL}. The three-dimensional arrays $\mathbf{x}$ and $\mathbf{y}$ collect the grid point values for all $nin$ input fields and $nout$ output fields of CLOUDSC2, respectively. The corresponding variations are $\delta \mathbf{x}$ and $\delta \mathbf{y}$. The grid consists of $ncol$ columns, each containing $nlev$ vertical levels. Note that compared to its functional counterpart $F' \left[\boldsymbol{x} \right] : \delta \boldsymbol{x} \mapsto \delta \boldsymbol{y}$, \textsc{CLOUDSC2TL($\mathbf{x}, \, \delta \mathbf{x}$)} returns both $\mathbf{y}$ and $\delta \mathbf{y}$. The coding implementation of the non-linear CLOUDSC2 is indicated as \textsc{CLOUDSC2NL}.}
+        \label{alg:taylor-test}
+
+        \begin{algorithmic}[1]
+            \Function{TotalNorm}{$ncol, \, nlev, \, nout, \, \mathbf{y}, \, \mathbf{y}_j, \, \delta \mathbf{y}_j$} \Comment{$\mathbf{y}, \, \mathbf{y}_j, \, \delta \mathbf{y}_j \in \mathbb{R}^{ncol \times nlev \times nout}$}
+                \State $total\_norm ~ \gets ~ 0$
+                \State $total\_count ~ \gets ~ 0$
+                \For{l}{1}{nout}
+                    %\State $\beta ~ \gets ~ \big| \Call{GetFieldSum}{\delta \mathbf{y}_j \left( :, \, :, \, n \right)} \big|$
+                    \State $\beta ~ \gets ~ \big| \sum_{i=1}^{nlev} \sum_{k=1}^{ncol} \delta \mathbf{y}_j \left( i, \, k, \, l \right) \big|$
+                    \If{$\beta > 0$}
+                        %\State $total\_norm ~ \gets ~ total\_norm + \big| \Call{GetFieldSum}{\mathbf{y}_j \left( :, \, :, \, n \right) - \mathbf{y} \left( :, \, :, \, n \right)} \big| \, / \, \beta$
+                        \State $total\_norm ~ \gets ~ total\_norm + \big| \sum_{i=1}^{nlev} \sum_{k=1}^{ncol} \left( \mathbf{y}_j \left( i, \, k, \, l \right) - \mathbf{y} \left( i, \, k, \, l \right) \right) \big| \, / \, \beta$
+                        \State $total\_count ~ \gets ~ total\_count + 1$
+                    \EndIf
+                \EndFor
+                \If{$total\_count > 0$}
+                    \State \textbf{return} $total\_norm \, / \, total\_count$
+                \Else
+                    \State \textbf{return} 0
+                \EndIf
+            \EndFunction
+            
+            \Statex
+            
+            \Procedure{TaylorTest}{$ncol, \, nlev, \, nin, \, nout, \, \mathbf{x}$} \Comment{$\mathbf{x} \in \mathbb{R}^{ncol \times nlev \times nin}$}
+
+            %\State $\mathbf{y} ~ \gets ~$ \Call{CLOUDSC2NL}{$\mathbf{x}$}
+            \State $\delta \mathbf{x} ~ \gets ~ 0.01 * \mathbf{x}$
+            \State $\left( \mathbf{y}, \, \delta \mathbf{y} \right) ~ \gets ~ \Call{CLOUDSC2tl}{\mathbf{x}, \, \delta \mathbf{x}}$ \Comment{$\mathbf{y}, \, \delta \mathbf{y} \in \mathbb{R}^{ncol \times nlev \times nout}$}
+            \State $norms ~ \gets ~ ()$
+            \State $jstart ~ \gets ~ 1$
+            \For{j}{1}{10}
+                %\State $\mathbf{x}_j ~ \gets ~ \mathbf{x} + 10^{-j} * \delta \mathbf{x}$
+                \State $\mathbf{y}_j ~ \gets ~ \Call{CLOUDSC2nl}{\mathbf{x} + 10^{-j} * \delta \mathbf{x}}$
+                %\State $\delta \mathbf{y}_j ~ \gets ~ 10^{-j} * \delta \mathbf{y}$
+                \State $norms ~ \gets ~ norms ~ \cup ~ \left( 1 - \Call{TotalNorm}{ncol, \, nlev, \, nout, \, \mathbf{y}, \, \mathbf{y}_j, \, 10^{-j} * \delta \mathbf{y}} \right)$
+                \If{$jstart = 1 \And norms(j) < 0.5$}
+                    \State $jstart \gets j$
+                \EndIf
+            \EndFor
+
+            \State{$test ~ \gets ~ -10$}
+            \State{$negat ~ \gets ~ \text{True}$}
+            \For{j}{jstart}{9}
+                \If{$negat \And norms(j+1) \ge norms(j)$}
+                    \State $test ~ \gets ~ test + 10$
+                \EndIf
+                \State $negat ~ \gets ~ norms(j+1) < norms(j)$
+            \EndFor
+            \If{$test = -10$}
+                \State $test ~ \gets ~ 11$
+            \EndIf
+            \If{$\min_{jstart \le j \le 10} \left( {norms(j)} \right) > 10^{-5}$}
+                \State $test ~ \gets ~ test + 7$
+            \EndIf
+            \If{$\min_{jstart \le j \le 10} \left( {norms(j)} \right) > 10^{-6}$}
+                \State $test ~ \gets ~ test + 5$
+            \EndIf
+            \If{$test \le 5$}
+                \State \textbf{print} \emph{"The Taylor test passed."}
+            \Else
+                \State \textbf{print} \emph{"The Taylor test failed."}
+            \EndIf
+            \EndProcedure
+        \end{algorithmic}
+    \end{algorithm}
+
+    \begin{algorithm}[t!]
+        \caption{The symmetry test assessing the formal correctness of the coding implementation of the adjoint formulation of CLOUDSC2, denoted as \textsc{CLOUDSC2AD}. The machine epsilon is indicated as $\varepsilon$; all other symbols have the same meaning as in Algorithm \ref{alg:taylor-test}. Note that compared to its functional counterpart $F^* \left[ F \left( \boldsymbol{x} \right) \right] : \delta \boldsymbol{y} \mapsto \delta \boldsymbol{x}^*$, \textsc{CLOUDSC2AD($\mathbf{x}, \, \delta \mathbf{y}$)} returns both $\mathbf{y}$ and $\delta \mathbf{x}^*$.}
+        \label{alg:symmetry-test}
+    
+        \begin{algorithmic}[1]
+            \Function{ColumnWiseInnerProduct}{$ncol, \, nlev, \, ndim, \, \mathbf{a}, \, \mathbf{b}$} \Comment{$\mathbf{a}, \, \mathbf{b} \in \mathbb{R}^{ncol \times nlev \times ndim}$}
+                \State $\boldsymbol{c} ~ \gets ~ \mathbf{0} \in \mathbb{R}^{ncol}$
+                \For{l}{1}{ndim}
+                    \For{i}{1}{ncol}
+                        \State $\boldsymbol{c}(i) ~ \gets ~ \boldsymbol{c}(i) + \sum_{k=1}^{ncol} \mathbf{a} \left( i, \, k, \, l \right) * \mathbf{b} \left( i, \, k, \, l \right)$
+                    \EndFor
+                \EndFor
+                \State \textbf{return} $\boldsymbol{c}$
+            \EndFunction
+    
+            \Statex
+            
+            \Procedure{SymmetryTest}{$ncol, \, nlev, \, nin, \, nout, \, \mathbf{x}, \varepsilon$} \Comment{$\mathbf{x} \in \mathbb{R}^{ncol \times nlev \times nin}$}
+    
+            \State $\delta \mathbf{x} ~ \gets ~ 0.01 * \mathbf{x}$
+            \State $\left( \mathbf{y}, \, \delta \mathbf{y} \right) ~ \gets ~ \Call{CLOUDSC2TL}{\mathbf{x}, \, \delta \mathbf{x}}$ \Comment{$\mathbf{y}, \, \delta \mathbf{y} \in \mathbb{R}^{ncol \times nlev \times nout}$}
+            
+            \State $\left( \mathbf{y}, \, \delta \mathbf{x}^* \right) ~ \gets ~ \Call{CLOUDSC2AD}{\mathbf{x}, \, \delta \mathbf{y}}$ \Comment{$\mathbf{x}^*, \, \delta \mathbf{x}^* \in \mathbb{R}^{ncol \times nlev \times nin}$}
+            \State $\boldsymbol{c}_{\mathbf{y}} ~ \gets ~ \Call{ColumnWiseInnerProduct}{ncol, \, nlev, \, nout, \, \delta \mathbf{y}, \, \delta \mathbf{y}}$
+            \State $\boldsymbol{c}_{\mathbf{x}} ~ \gets ~ \Call{ColumnWiseInnerProduct}{ncol, \, nlev, \, nin, \, \delta \mathbf{x}, \, \delta \mathbf{x}^*}$
+    
+            \State $success ~ \gets ~ \text{True}$
+            \For{i}{1}{ncol}
+                \If{$\boldsymbol{c}_{\mathbf{x}}(i) = 0$}
+                    \State $c ~ \gets ~ \left| \boldsymbol{c}_{\mathbf{y}}(i) \right| \, / \, \varepsilon$
+                \Else
+                    \State $c ~ \gets ~ \left| \boldsymbol{c}_{\mathbf{y}}(i) - \boldsymbol{c}_{\mathbf{x}}(i) \right| \, / \, \left| \varepsilon * \boldsymbol{c}_{\mathbf{x}}(i) \right|$
+                \EndIf
+                \State $success ~ \gets ~ success \And c < 10^3$
+            \EndFor
+            \If{$success$}
+                \State \textbf{print} \emph{"The symmetry test passed."}
+            \Else
+                \State \textbf{print} \emph{"The symmetry test failed."}
+            \EndIf
+            \EndProcedure
+        \end{algorithmic}
+    \end{algorithm}
+\end{document}
