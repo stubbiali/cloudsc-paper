@@ -7,5 +7,4 @@
 .python-version
 __pycache__/
 _minted*
-main.pdf
 venv*
