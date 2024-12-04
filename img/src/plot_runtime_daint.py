@@ -157,7 +157,9 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
     return data_0, data_1, data_2
 
 
-def fill_ax_x0(ax: plt.Axes, data: list[Bar], ylim: tuple[int, int]) -> list[Any]:
+def fill_ax_x0(
+    ax: plt.Axes, data: list[Bar], ylim: tuple[int, int], set_title: bool = True
+) -> list[Any]:
     handles = []
     for bar in data:
         if bar.y != 0:
@@ -184,19 +186,24 @@ def fill_ax_x0(ax: plt.Axes, data: list[Bar], ylim: tuple[int, int]) -> list[Any
     ax.yaxis.grid(True, linestyle=":")
     ax.set_ylabel("Runtime [ms]")
 
-    precision = data[0].constraints.get("precision", "double")
-    if precision == "double":
-        letter = "a"
-        dtype = "FP64"
-    else:
-        letter = "d"
-        dtype = "FP32"
-    ax.set_title("$\\mathbf{(" + letter + ")}$ CLOUDSC (" + dtype + ")", loc="center", fontsize=16)
+    if set_title:
+        precision = data[0].constraints.get("precision", "double")
+        if precision == "double":
+            letter = "a"
+            dtype = "FP64"
+        else:
+            letter = "d"
+            dtype = "FP32"
+        ax.set_title(
+            "$\\mathbf{(" + letter + ")}$ CLOUDSC (" + dtype + ")", loc="center", fontsize=16
+        )
 
     return handles
 
 
-def fill_ax_x1(ax: plt.Axes, data: list[Bar], ylim: tuple[int, int]) -> None:
+def fill_ax_x1(
+    ax: plt.Axes, data: list[Bar], ylim: tuple[int, int], set_title: bool = True
+) -> None:
     for bar in data:
         if bar.y != 0:
             ax.bar(bar.x, bar.y, width=bar.width, color=bar.color, edgecolor="black")
@@ -219,21 +226,24 @@ def fill_ax_x1(ax: plt.Axes, data: list[Bar], ylim: tuple[int, int]) -> None:
     ax.yaxis.grid(True, linestyle=":")
     # ax.set_ylabel("Runtime [ms]")
 
-    precision = data[0].constraints.get("precision", "double")
-    if precision == "double":
-        letter = "b"
-        dtype = "FP64"
-    else:
-        letter = "e"
-        dtype = "FP32"
-    ax.set_title(
-        "$\\mathbf{(" + letter + ")}$ CLOUDSC2: Non-linear (" + dtype + ")",
-        loc="center",
-        fontsize=16,
-    )
+    if set_title:
+        precision = data[0].constraints.get("precision", "double")
+        if precision == "double":
+            letter = "b"
+            dtype = "FP64"
+        else:
+            letter = "e"
+            dtype = "FP32"
+        ax.set_title(
+            "$\\mathbf{(" + letter + ")}$ CLOUDSC2: Non-linear (" + dtype + ")",
+            loc="center",
+            fontsize=16,
+        )
 
 
-def fill_ax_x2(ax: plt.Axes, data: list[Bar], ylim: tuple[int, int]) -> None:
+def fill_ax_x2(
+    ax: plt.Axes, data: list[Bar], ylim: tuple[int, int], set_title: bool = True
+) -> None:
     for bar in data:
         if bar.y != 0:
             ax.bar(bar.x, bar.y, width=bar.width, color=bar.color, edgecolor="black")
@@ -256,18 +266,19 @@ def fill_ax_x2(ax: plt.Axes, data: list[Bar], ylim: tuple[int, int]) -> None:
     ax.yaxis.grid(True, linestyle=":")
     # ax.set_ylabel("Runtime [ms]")
 
-    precision = data[0].constraints.get("precision", "double")
-    if precision == "double":
-        letter = "c"
-        dtype = "FP64"
-    else:
-        letter = "f"
-        dtype = "FP32"
-    ax.set_title(
-        "$\\mathbf{(" + letter + ")}$ CLOUDSC2: Symmetry test (" + dtype + ")",
-        loc="center",
-        fontsize=16,
-    )
+    if set_title:
+        precision = data[0].constraints.get("precision", "double")
+        if precision == "double":
+            letter = "c"
+            dtype = "FP64"
+        else:
+            letter = "f"
+            dtype = "FP32"
+        ax.set_title(
+            "$\\mathbf{(" + letter + ")}$ CLOUDSC2: Symmetry test (" + dtype + ")",
+            loc="center",
+            fontsize=16,
+        )
 
 
 @click.command()

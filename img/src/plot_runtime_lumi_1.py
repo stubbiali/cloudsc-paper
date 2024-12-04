@@ -47,21 +47,6 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
             label="Fortran: OpenMP (CPU)",
         ),
         Bar(
-            ds_name=os.path.join(
-                DATA_DIR, "cloudsc/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/performance.csv"
-            ),
-            col_name="runtime_mean",
-            constraints={
-                "variant": "gt:cpu_kfirst",
-                "num_cols": NUM_COLS,
-                "num_threads": NUM_THREADS,
-                "precision": precision,
-            },
-            x=2,
-            color="cornflowerblue",
-            label="GT4Py: CPU k-first",
-        ),
-        Bar(
             ds_name=os.path.join(DATA_DIR, "cloudsc/lumi/cray-gpu/14.0.2/release/performance.csv"),
             col_name="runtime_mean",
             constraints={
@@ -96,6 +81,21 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
             x=5,
             color="green",
             label="C: HIP (GPU)",
+        ),
+        Bar(
+            ds_name=os.path.join(
+                DATA_DIR, "cloudsc/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/performance.csv"
+            ),
+            col_name="runtime_mean",
+            constraints={
+                "variant": "gt:cpu_kfirst",
+                "num_cols": NUM_COLS,
+                "num_threads": NUM_THREADS,
+                "precision": precision,
+            },
+            x=2,
+            color="cornflowerblue",
+            label="GT4Py: CPU k-first",
         ),
         Bar(
             ds_name=os.path.join(

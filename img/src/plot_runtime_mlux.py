@@ -80,7 +80,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
             },
             x=5,
             color="green",
-            label="C: CUDA",
+            label="C: CUDA/HIP",
         ),
         Bar(
             ds_name=os.path.join(
