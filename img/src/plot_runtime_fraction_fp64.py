@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 import os
 from typing import Any, Literal
 
-from common import Bar, DATA_DIR, IMG_DIR, NUM_COLS
+from common import Bar, CM_TO_INCH, DATA_ROOT_DIR, IMG_ROOT_DIR, NUM_COLS
 from plot_runtime_lumi import NUM_THREADS as NUM_THREADS_LUMI
 from plot_runtime_mlux import NUM_THREADS as NUM_THREADS_MLUX
 
@@ -35,7 +35,7 @@ def get_data(
 ) -> tuple[list[Bar], list[Bar], list[Bar]]:
     data_0 = [
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc/daint/gnu/6.0.10/{ds_name}"),
+            ds_name=os.path.join(DATA_ROOT_DIR, f"cloudsc/daint/gnu/6.0.10/{ds_name}"),
             col_name=col_name,
             constraints={"variant": "gt:cpu_kfirst", "num_cols": NUM_COLS, "precision": precision},
             x=1,
@@ -43,7 +43,7 @@ def get_data(
             label="CPU k-first",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc/daint/gnu/6.0.10/{ds_name}"),
+            ds_name=os.path.join(DATA_ROOT_DIR, f"cloudsc/daint/gnu/6.0.10/{ds_name}"),
             col_name=col_name,
             constraints={"variant": "dace:gpu", "num_cols": NUM_COLS, "precision": precision},
             x=1.5,
@@ -51,7 +51,9 @@ def get_data(
             label="DaCe (GPU)",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc/mlux/release/2022.1/gnu/11.3.0/{ds_name}"),
+            ds_name=os.path.join(
+                DATA_ROOT_DIR, f"cloudsc/mlux/release/2022.1/gnu/11.3.0/{ds_name}"
+            ),
             col_name=col_name,
             constraints={
                 "variant": "gt:cpu_kfirst",
@@ -63,7 +65,9 @@ def get_data(
             color="cornflowerblue",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc/mlux/release/2022.1/gnu/11.3.0/{ds_name}"),
+            ds_name=os.path.join(
+                DATA_ROOT_DIR, f"cloudsc/mlux/release/2022.1/gnu/11.3.0/{ds_name}"
+            ),
             col_name=col_name,
             constraints={"variant": "dace:gpu", "num_cols": NUM_COLS, "precision": precision},
             x=3,
@@ -71,7 +75,7 @@ def get_data(
         ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, f"cloudsc/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
+                DATA_ROOT_DIR, f"cloudsc/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
             ),
             col_name=col_name,
             constraints={
@@ -85,7 +89,7 @@ def get_data(
         ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, f"cloudsc/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
+                DATA_ROOT_DIR, f"cloudsc/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
             ),
             col_name=col_name,
             constraints={"variant": "dace:gpu", "num_cols": NUM_COLS, "precision": precision},
@@ -95,7 +99,7 @@ def get_data(
     ]
     data_1 = [
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc2/daint/gnu/6.0.10/{ds_name}"),
+            ds_name=os.path.join(DATA_ROOT_DIR, f"cloudsc2/daint/gnu/6.0.10/{ds_name}"),
             col_name=col_name,
             constraints={
                 "variant": "nl-gt:cpu_kfirst",
@@ -106,14 +110,16 @@ def get_data(
             color="cornflowerblue",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc2/daint/gnu/6.0.10/{ds_name}"),
+            ds_name=os.path.join(DATA_ROOT_DIR, f"cloudsc2/daint/gnu/6.0.10/{ds_name}"),
             col_name=col_name,
             constraints={"variant": "nl-dace:gpu", "num_cols": NUM_COLS, "precision": precision},
             x=1.5,
             color="coral",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc2/mlux/release/2022.1/gnu/11.3.0/{ds_name}"),
+            ds_name=os.path.join(
+                DATA_ROOT_DIR, f"cloudsc2/mlux/release/2022.1/gnu/11.3.0/{ds_name}"
+            ),
             col_name=col_name,
             constraints={
                 "variant": "nl-gt:cpu_kfirst",
@@ -125,7 +131,9 @@ def get_data(
             color="cornflowerblue",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc2/mlux/release/2022.1/gnu/11.3.0/{ds_name}"),
+            ds_name=os.path.join(
+                DATA_ROOT_DIR, f"cloudsc2/mlux/release/2022.1/gnu/11.3.0/{ds_name}"
+            ),
             col_name=col_name,
             constraints={"variant": "nl-dace:gpu", "num_cols": NUM_COLS, "precision": precision},
             x=3,
@@ -133,7 +141,7 @@ def get_data(
         ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, f"cloudsc2/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
+                DATA_ROOT_DIR, f"cloudsc2/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
             ),
             col_name=col_name,
             constraints={
@@ -147,7 +155,7 @@ def get_data(
         ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, f"cloudsc2/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
+                DATA_ROOT_DIR, f"cloudsc2/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
             ),
             col_name=col_name,
             constraints={"variant": "nl-dace:gpu", "num_cols": NUM_COLS, "precision": precision},
@@ -157,7 +165,7 @@ def get_data(
     ]
     data_2 = [
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc2/daint/gnu/6.0.10/{ds_name}"),
+            ds_name=os.path.join(DATA_ROOT_DIR, f"cloudsc2/daint/gnu/6.0.10/{ds_name}"),
             col_name=col_name,
             constraints={
                 "variant": "ad-gt:cpu_kfirst",
@@ -168,14 +176,16 @@ def get_data(
             color="cornflowerblue",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc2/daint/gnu/6.0.10/{ds_name}"),
+            ds_name=os.path.join(DATA_ROOT_DIR, f"cloudsc2/daint/gnu/6.0.10/{ds_name}"),
             col_name=col_name,
             constraints={"variant": "ad-dace:gpu", "num_cols": NUM_COLS, "precision": precision},
             x=1.5,
             color="coral",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc2/mlux/release/2022.1/gnu/11.3.0/{ds_name}"),
+            ds_name=os.path.join(
+                DATA_ROOT_DIR, f"cloudsc2/mlux/release/2022.1/gnu/11.3.0/{ds_name}"
+            ),
             col_name=col_name,
             constraints={
                 "variant": "ad-gt:cpu_kfirst",
@@ -187,7 +197,9 @@ def get_data(
             color="cornflowerblue",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, f"cloudsc2/mlux/release/2022.1/gnu/11.3.0/{ds_name}"),
+            ds_name=os.path.join(
+                DATA_ROOT_DIR, f"cloudsc2/mlux/release/2022.1/gnu/11.3.0/{ds_name}"
+            ),
             col_name=col_name,
             constraints={"variant": "ad-dace:gpu", "num_cols": NUM_COLS, "precision": precision},
             x=3,
@@ -195,7 +207,7 @@ def get_data(
         ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, f"cloudsc2/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
+                DATA_ROOT_DIR, f"cloudsc2/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
             ),
             col_name=col_name,
             constraints={
@@ -209,7 +221,7 @@ def get_data(
         ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, f"cloudsc2/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
+                DATA_ROOT_DIR, f"cloudsc2/lumi/lumi/23.03/cray/8.3.3/cce/15.0.1/{ds_name}"
             ),
             col_name=col_name,
             constraints={"variant": "ad-dace:gpu", "num_cols": NUM_COLS, "precision": precision},
@@ -329,12 +341,7 @@ def fill_ax_x2(ax: plt.Axes, data: list[Bar], data_stencils: list[Bar]) -> None:
 @click.option("--show/--no-show", is_flag=True, default=True)
 @click.option("--save", is_flag=True, default=False)
 def main(show: bool, save: bool) -> None:
-    plt.rcParams["font.size"] = 16
-    plt.rcParams["hatch.color"] = "white"
-    plt.rcParams["hatch.linewidth"] = 3
-
-    cm_to_inch = 1 / 2.54
-    figsize_in_cm = tuple(dim * cm_to_inch for dim in FIGSIZE_IN_INCH)
+    figsize_in_cm = tuple(dim * CM_TO_INCH for dim in FIGSIZE_IN_INCH)
     fig = plt.figure(figsize=figsize_in_cm)
     gs = fig.add_gridspec(2, 3, height_ratios=(1, 0.10))
     ax_00 = fig.add_subplot(gs[0, 0])
@@ -372,8 +379,8 @@ def main(show: bool, save: bool) -> None:
     fig.tight_layout()
     plt.subplots_adjust(hspace=0.38)
     if save:
-        os.makedirs(IMG_DIR, exist_ok=True)
-        fig.savefig(os.path.join(IMG_DIR, "runtime_fraction_1.pdf"))
+        os.makedirs(IMG_ROOT_DIR, exist_ok=True)
+        fig.savefig(os.path.join(IMG_ROOT_DIR, "share/runtime_fraction_fp64.pdf"))
     if show:
         plt.show()
 

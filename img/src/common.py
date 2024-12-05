@@ -15,6 +15,7 @@
 # limitations under the License.
 
 from __future__ import annotations
+import matplotlib as mpl
 import os
 import pandas as pd
 from pydantic import BaseModel, Field, field_validator
@@ -22,10 +23,16 @@ from typing import Optional, Union
 from typing_extensions import Annotated
 
 
+CM_TO_INCH = 1 / 2.54
 NUM_COLS: int = 65536
 PROJECT_ROOT_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-DATA_DIR: str = os.path.join(PROJECT_ROOT_DIR, "data")
-IMG_DIR: str = os.path.join(PROJECT_ROOT_DIR, "img")
+DATA_ROOT_DIR: str = os.path.join(PROJECT_ROOT_DIR, "data")
+IMG_ROOT_DIR: str = os.path.join(PROJECT_ROOT_DIR, "img")
+
+
+mpl.rcParams["font.size"] = 16
+mpl.rcParams["hatch.color"] = "white"
+mpl.rcParams["hatch.linewidth"] = 3
 
 
 def get_value_from_dataset(ds_name: str, col_name: str, **constraints) -> float:

@@ -16,12 +16,11 @@
 
 from __future__ import annotations
 import click
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import os
 from typing import Literal
 
-from common import Bar, DATA_DIR, IMG_DIR, NUM_COLS
+from common import Bar, CM_TO_INCH, DATA_ROOT_DIR, IMG_ROOT_DIR, NUM_COLS
 from plot_runtime_daint import fill_ax_x0, fill_ax_x1, fill_ax_x2
 
 
@@ -34,7 +33,7 @@ NUM_THREADS: int = 16
 def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Bar], list[Bar]]:
     data_0 = [
         Bar(
-            ds_name=os.path.join(DATA_DIR, "cloudsc/mlux/nvhpc/22.7/release/performance.csv"),
+            ds_name=os.path.join(DATA_ROOT_DIR, "cloudsc/mlux/nvhpc/22.7/release/performance.csv"),
             col_name="runtime_mean",
             constraints={
                 "variant": "fortran",
@@ -47,7 +46,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
             label="Fortran: OpenMP (CPU)",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, "cloudsc/mlux/nvhpc/22.7/release/performance.csv"),
+            ds_name=os.path.join(DATA_ROOT_DIR, "cloudsc/mlux/nvhpc/22.7/release/performance.csv"),
             col_name="runtime_mean",
             constraints={
                 "variant": "gpu-scc-k-caching",
@@ -59,7 +58,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
             label="Fortran: OpenACC (GPU)",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, "cloudsc/mlux/nvhpc/22.7/release/performance.csv"),
+            ds_name=os.path.join(DATA_ROOT_DIR, "cloudsc/mlux/nvhpc/22.7/release/performance.csv"),
             col_name="runtime_mean",
             constraints={
                 "variant": "loki-scc-cuf-hoist",
@@ -71,7 +70,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
             label="Fortran: Loki (GPU)",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, "cloudsc/mlux/nvhpc/22.7/release/performance.csv"),
+            ds_name=os.path.join(DATA_ROOT_DIR, "cloudsc/mlux/nvhpc/22.7/release/performance.csv"),
             col_name="runtime_mean",
             constraints={
                 "variant": "cuda-k-caching",
@@ -84,7 +83,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, "cloudsc/mlux/release/2022.1/gnu/11.3.0/performance.csv"
+                DATA_ROOT_DIR, "cloudsc/mlux/release/2022.1/gnu/11.3.0/performance.csv"
             ),
             col_name="runtime_mean",
             constraints={
@@ -99,7 +98,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, "cloudsc/mlux/release/2022.1/gnu/11.3.0/performance.csv"
+                DATA_ROOT_DIR, "cloudsc/mlux/release/2022.1/gnu/11.3.0/performance.csv"
             ),
             col_name="runtime_mean",
             constraints={"variant": "dace:gpu", "num_cols": NUM_COLS, "precision": precision},
@@ -110,7 +109,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
     ]
     data_1 = [
         Bar(
-            ds_name=os.path.join(DATA_DIR, "cloudsc2/mlux/nvhpc/22.7/release/performance.csv"),
+            ds_name=os.path.join(DATA_ROOT_DIR, "cloudsc2/mlux/nvhpc/22.7/release/performance.csv"),
             col_name="runtime_mean",
             constraints={
                 "variant": "nl",
@@ -122,7 +121,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
             color="grey",
         ),
         Bar(
-            ds_name=os.path.join(DATA_DIR, "cloudsc2/mlux/nvhpc/22.7/release/performance.csv"),
+            ds_name=os.path.join(DATA_ROOT_DIR, "cloudsc2/mlux/nvhpc/22.7/release/performance.csv"),
             col_name="runtime_mean",
             constraints={
                 "variant": "nl-loki-scc-hoist",
@@ -134,7 +133,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, "cloudsc2/mlux/release/2022.1/gnu/11.3.0/performance.csv"
+                DATA_ROOT_DIR, "cloudsc2/mlux/release/2022.1/gnu/11.3.0/performance.csv"
             ),
             col_name="runtime_mean",
             constraints={
@@ -148,7 +147,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, "cloudsc2/mlux/release/2022.1/gnu/11.3.0/performance.csv"
+                DATA_ROOT_DIR, "cloudsc2/mlux/release/2022.1/gnu/11.3.0/performance.csv"
             ),
             col_name="runtime_mean",
             constraints={"variant": "nl-dace:gpu", "num_cols": NUM_COLS, "precision": precision},
@@ -158,7 +157,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
     ]
     data_2 = [
         Bar(
-            ds_name=os.path.join(DATA_DIR, "cloudsc2/mlux/nvhpc/22.7/release/performance.csv"),
+            ds_name=os.path.join(DATA_ROOT_DIR, "cloudsc2/mlux/nvhpc/22.7/release/performance.csv"),
             col_name="runtime_mean",
             constraints={
                 "variant": "ad",
@@ -182,7 +181,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         # ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, "cloudsc2/mlux/release/2022.1/gnu/11.3.0/performance.csv"
+                DATA_ROOT_DIR, "cloudsc2/mlux/release/2022.1/gnu/11.3.0/performance.csv"
             ),
             col_name="runtime_mean",
             constraints={
@@ -196,7 +195,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
         ),
         Bar(
             ds_name=os.path.join(
-                DATA_DIR, "cloudsc2/mlux/release/2022.1/gnu/11.3.0/performance.csv"
+                DATA_ROOT_DIR, "cloudsc2/mlux/release/2022.1/gnu/11.3.0/performance.csv"
             ),
             col_name="runtime_mean",
             constraints={"variant": "ad-dace:gpu", "num_cols": NUM_COLS, "precision": precision},
@@ -211,9 +210,7 @@ def get_data(precision: Literal["double", "single"]) -> tuple[list[Bar], list[Ba
 @click.option("--show/--no-show", is_flag=True, default=True)
 @click.option("--save", is_flag=True, default=False)
 def main(show: bool, save: bool) -> None:
-    mpl.rcParams["font.size"] = 16
-    cm_to_inch = 1 / 2.54
-    figsize_in_cm = tuple(dim * cm_to_inch for dim in FIGSIZE_IN_INCH)
+    figsize_in_cm = tuple(dim * CM_TO_INCH for dim in FIGSIZE_IN_INCH)
     fig = plt.figure(figsize=figsize_in_cm)
     gs = fig.add_gridspec(3, 3, height_ratios=(1, 1, 0.05))
     ax_00 = fig.add_subplot(gs[0, 0])
@@ -247,8 +244,8 @@ def main(show: bool, save: bool) -> None:
     fig.tight_layout()
     plt.subplots_adjust(hspace=0.32)
     if save:
-        os.makedirs(IMG_DIR, exist_ok=True)
-        fig.savefig(os.path.join(IMG_DIR, "performance_mlux_2.pdf"))
+        os.makedirs(IMG_ROOT_DIR, exist_ok=True)
+        fig.savefig(os.path.join(IMG_ROOT_DIR, "share/performance_mlux_2.pdf"))
     if show:
         plt.show()
 
