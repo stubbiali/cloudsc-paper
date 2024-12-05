@@ -388,7 +388,7 @@ def main(show: bool, save: bool) -> None:
     plt.subplots_adjust(hspace=0.38)
     if save:
         os.makedirs(IMG_ROOT_DIR, exist_ok=True)
-        fig.savefig(os.path.join(IMG_ROOT_DIR, "share/runtime_fraction_1.pdf"))
+        fig.savefig(os.path.join(IMG_ROOT_DIR, "final/runtime_fraction.pdf"))
     if show:
         plt.show()
 

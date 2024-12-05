@@ -245,7 +245,7 @@ def main(show: bool, save: bool) -> None:
     plt.subplots_adjust(hspace=0.32)
     if save:
         os.makedirs(IMG_ROOT_DIR, exist_ok=True)
-        fig.savefig(os.path.join(IMG_ROOT_DIR, "share/performance_mlux_2.pdf"))
+        fig.savefig(os.path.join(IMG_ROOT_DIR, "final/performance_mlux.pdf"))
     if show:
         plt.show()
 
